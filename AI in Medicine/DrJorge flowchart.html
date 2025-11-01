@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical AI Ecosystem - Dr. Jorge Cardoso</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Sarabun', 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        body {
+            background: linear-gradient(135deg, #0a1929 0%, #1a2f4a 100%);
+            min-height: 100vh;
+        }
+        .page-header {
+            background: linear-gradient(135deg, #0066cc 0%, #00b8a9 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 102, 204, 0.2);
+        }
+        .page-header h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .page-header p {
+            opacity: 0.95;
+            font-size: 1.1rem;
+        }
+        .tab-btn {
+            padding: 0.75rem 1.25rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            border-radius: 0.5rem 0.5rem 0 0;
+            transition: all 0.3s ease;
+            background: white;
+            margin-right: 0.25rem;
+        }
+        .tab-btn:hover {
+            color: #0066cc;
+            background: #f0f7ff;
+        }
+        .tab-btn.active {
+            color: white;
+            background: linear-gradient(135deg, #0066cc 0%, #00b8a9 100%);
+            border-bottom-color: #00b8a9;
+        }
+        .tab-content {
+            display: none;
+            padding: 2rem;
+            background: white;
+            border-radius: 0 0 1rem 1rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .tab-content h2 {
+            color: #0066cc;
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        .tab-content p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .svg-container {
+            width: 100%;
+            height: auto;
+            overflow: auto;
+            background: linear-gradient(to bottom, #f9fafb, #ffffff);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        .svg-node-title {
+            font-weight: 700;
+            fill: #0066cc;
+        }
+        .svg-node-text {
+            font-size: 12px;
+            fill: #4b5563;
+        }
+        .svg-connector {
+            stroke: #00b8a9;
+            stroke-width: 2.5;
+            marker-end: url(#arrowhead);
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+        .svg-connector-dashed {
+            stroke-dasharray: 5, 5;
+        }
+        .svg-bridge {
+            fill: url(#bridgeGradient);
+            stroke: #00b8a9;
+            stroke-width: 2;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }
+        .svg-chasm-land {
+            fill: #f0f7ff;
+            stroke: #0066cc;
+            stroke-width: 2;
+        }
+        .svg-chasm-problem {
+            fill: #fee2e2;
+            stroke: #ff6b6b;
+            stroke-width: 2;
+        }
+        .svg-chasm-solution {
+            fill: #dcfce7;
+            stroke: #00b8a9;
+            stroke-width: 2;
+        }
+        .exec-question {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-left: 4px solid #f8b739;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 12px rgba(248, 183, 57, 0.1);
+        }
+        .exec-question p:first-child {
+            font-weight: 700;
+            color: #b45309;
+        }
+        .exec-question p:last-child {
+            color: #78350f;
+            margin-top: 0.75rem;
+            line-height: 1.7;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .mini-diagram {
+            background: linear-gradient(135deg, #f0f7ff 0%, #f5f3ff 100%);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 2px solid #0066cc;
+            box-shadow: 0 4px 15px rgba(0, 102, 204, 0.1);
+        }
+        .mini-diagram h3 {
+            color: #0066cc;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>🧠 Medical AI Ecosystem</h1>
+            <p>ผังแนวคิดจากการบรรยายของ Dr. Jorge Cardoso</p>
+            <p style="font-size: 0.95rem; opacity: 0.9; margin-top: 0.5rem;">เรียบเรียงและวิเคราะห์ สำหรับผู้บริหารสาธารณสุขไทย</p>
+        </div>
+
+        <!-- SVG Definitions -->
+        <svg width="0" height="0" class="absolute">
+            <defs>
+                <marker id="arrowhead" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#00b8a9" />
+                </marker>
+                <linearGradient id="bridgeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#fef9c3;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#fde047;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+        </svg>
+
+        <!-- Tab Navigation -->
+        <div class="mb-2" style="display: flex; flex-wrap: wrap; gap: 0.25rem; border-radius: 1rem 1rem 0 0; overflow: hidden;">
+            <button class="tab-btn active" data-tab="tab1">1️⃣ 5 คันโยกคุณค่า</button>
+            <button class="tab-btn" data-tab="tab2">2️⃣ 4 ระดับวุฒิภาวะ</button>
+            <button class="tab-btn" data-tab="tab3">3️⃣ ข้ามเหวลึก</button>
+            <button class="tab-btn" data-tab="tab4">4️⃣ วงจรความปลอดภัย</button>
+            <button class="tab-btn" data-tab="tab5">5️⃣ บูรณาการจริง</button>
+            <button class="tab-btn" data-tab="tab6">6️⃣ 5 คำถาม CEO</button>
+        </div>
+
+        <!-- Tab Contents -->
+        <div id="tab-content-container">
+
+            <!-- Tab 1: 5 Levers -->
+            <div id="tab1" class="tab-content active">
+                <h2>🎯 5 คันโยกแห่งคุณค่า (5 Levers of Value)</h2>
+                <p class="mb-4">Medical AI เป็น "ศูนย์กลาง" ที่สร้างคุณค่าผ่าน 5 ทิศทาง หลัก</p>
+                <div class="svg-container">
+                    <svg viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Central Hub -->
+                        <circle cx="350" cy="250" r="80" fill="url(#hubGradient)" class="svg-node" stroke="#0066cc" stroke-width="3"/>
+                        <defs>
+                            <linearGradient id="hubGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#0066cc;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#00b8a9;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <text x="350" y="240" text-anchor="middle" style="font-size: 40px;">🤖</text>
+                        <text x="350" y="270" text-anchor="middle" style="font-size: 18px; font-weight: 700; fill: white;">Medical AI</text>
+
+                        <!-- Spokes -->
+                        <line x1="350" y1="250" x2="150" y2="80" class="svg-connector svg-connector-dashed" />
+                        <circle cx="150" cy="80" r="60" fill="#dcfce7" class="svg-node" stroke="#00b8a9" stroke-width="2"/>
+                        <text x="150" y="60" text-anchor="middle" style="font-size: 32px;">🧑‍⚕️</text>
+                        <text x="150" y="100" text-anchor="middle" class="svg-node-title" style="font-size: 13px;">Patient Care</text>
+
+                        <line x1="350" y1="250" x2="350" y2="60" class="svg-connector svg-connector-dashed" />
+                        <circle cx="350" cy="60" r="60" fill="#dcfce7" class="svg-node" stroke="#00b8a9" stroke-width="2"/>
+                        <text x="350" y="40" text-anchor="middle" style="font-size: 32px;">⚡</text>
+                        <text x="350" y="100" text-anchor="middle" class="svg-node-title" style="font-size: 13px;">Clinical Efficiency</text>
+
+                        <line x1="350" y1="250" x2="550" y2="80" class="svg-connector svg-connector-dashed" />
+                        <circle cx="550" cy="80" r="60" fill="#dcfce7" class="svg-node" stroke="#00b8a9" stroke-width="2"/>
+                        <text x="550" y="60" text-anchor="middle" style="font-size: 32px;">💊</text>
+                        <text x="550" y="100" text-anchor="middle" class="svg-node-title" style="font-size: 13px;">Drug Discovery</text>
+
+                        <line x1="350" y1="250" x2="200" y2="420" class="svg-connector svg-connector-dashed" />
+                        <circle cx="200" cy="420" r="60" fill="#dcfce7" class="svg-node" stroke="#00b8a9" stroke-width="2"/>
+                        <text x="200" y="400" text-anchor="middle" style="font-size: 32px;">🏥</text>
+                        <text x="200" y="440" text-anchor="middle" class="svg-node-title" style="font-size: 13px;">Operations</text>
+
+                        <line x1="350" y1="250" x2="500" y2="420" class="svg-connector svg-connector-dashed" />
+                        <circle cx="500" cy="420" r="60" fill="#dcfce7" class="svg-node" stroke="#00b8a9" stroke-width="2"/>
+                        <text x="500" y="400" text-anchor="middle" style="font-size: 32px;">💎</text>
+                        <text x="500" y="440" text-anchor="middle" class="svg-node-title" style="font-size: 13px;">Value Medicine</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Tab 2: 4 Maturity Levels -->
+            <div id="tab2" class="tab-content">
+                <h2>📈 4 ระดับวุฒิภาวะ AI (Maturity Levels)</h2>
+                <p class="mb-4">เส้นทางวิวัฒนาการของ AI ในการแพทย์ จากเครื่องมือเฉพาะจุดไปยังมันสมอง</p>
+                <div class="svg-container">
+                    <svg viewBox="0 0 1000 280" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Level 1 -->
+                        <rect x="20" y="20" width="220" height="200" rx="10" fill="#dbeafe" class="svg-node" stroke="#0066cc" stroke-width="2"/>
+                        <text x="130" y="50" text-anchor="middle" class="svg-node-title" style="font-size: 15px;">Level 1: Single Purpose</text>
+                        <text x="130" y="75" text-anchor="middle" class="svg-node-text" style="font-size: 13px; font-weight: 600;">"ค้อน"</text>
+                        <text x="130" y="100" text-anchor="middle" class="svg-node-text">Point Solutions</text>
+                        <text x="130" y="125" text-anchor="middle" class="svg-node-text">(Segmentation,</text>
+                        <text x="130" y="145" text-anchor="middle" class="svg-node-text">Detection)</text>
+                        <text x="130" y="175" text-anchor="middle" style="font-size: 12px; fill: #dc2626; font-weight: 700;">⚠️ Creates Silos</text>
+
+                        <!-- Arrow -->
+                        <path d="M 245 120 L 285 120" class="svg-connector" />
+
+                        <!-- Level 2 -->
+                        <rect x="290" y="20" width="220" height="200" rx="10" fill="#e0e7ff" class="svg-node" stroke="#4f46e5" stroke-width="2"/>
+                        <text x="400" y="50" text-anchor="middle" class="svg-node-title" style="font-size: 15px; fill: #4f46e5;">Level 2: AutoML</text>
+                        <text x="400" y="75" text-anchor="middle" class="svg-node-text" style="font-size: 13px; font-weight: 600;">"สายการผลิต"</text>
+                        <text x="400" y="100" text-anchor="middle" class="svg-node-text">Platform Tools</text>
+                        <text x="400" y="125" text-anchor="middle" class="svg-node-text">(MONAI,</text>
+                        <text x="400" y="145" text-anchor="middle" class="svg-node-text">PyTorch)</text>
+                        <text x="400" y="175" text-anchor="middle" style="font-size: 12px; fill: #dc2626; font-weight: 700;">⚠️ Model-per-task</text>
+
+                        <!-- Arrow -->
+                        <path d="M 515 120 L 555 120" class="svg-connector" />
+
+                        <!-- Level 3 -->
+                        <rect x="560" y="20" width="220" height="200" rx="10" fill="#f3e8ff" class="svg-node" stroke="#a855f7" stroke-width="2"/>
+                        <text x="670" y="50" text-anchor="middle" class="svg-node-title" style="font-size: 15px; fill: #a855f7;">Level 3: Foundation</text>
+                        <text x="670" y="75" text-anchor="middle" class="svg-node-text" style="font-size: 13px; font-weight: 600;">"โรงงาน"</text>
+                        <text x="670" y="100" text-anchor="middle" class="svg-node-text">Platform Play</text>
+                        <text x="670" y="125" text-anchor="middle" class="svg-node-text">(One Model +</text>
+                        <text x="670" y="145" text-anchor="middle" class="svg-node-text">Fine-tuning)</text>
+                        <text x="670" y="175" text-anchor="middle" style="font-size: 12px; fill: #00b8a9; font-weight: 700;">✓ Scalable</text>
+
+                        <!-- Arrow -->
+                        <path d="M 785 120 L 825 120" class="svg-connector" />
+
+                        <!-- Level 4 -->
+                        <rect x="830" y="20" width="150" height="200" rx="10" fill="#fce7f3" class="svg-node" stroke="#ec4899" stroke-width="2"/>
+                        <text x="905" y="50" text-anchor="middle" class="svg-node-title" style="font-size: 14px; fill: #ec4899;">Level 4:</text>
+                        <text x="905" y="70" text-anchor="middle" class="svg-node-title" style="font-size: 14px; fill: #ec4899;">Multimodal FM</text>
+                        <text x="905" y="95" text-anchor="middle" class="svg-node-text" style="font-size: 12px; font-weight: 600;">"มันสมอง"</text>
+                        <text x="905" y="120" text-anchor="middle" class="svg-node-text" style="font-size: 11px;">360° Understanding</text>
+                        <text x="905" y="145" text-anchor="middle" class="svg-node-text" style="font-size: 11px;">(Images +</text>
+                        <text x="905" y="160" text-anchor="middle" class="svg-node-text" style="font-size: 11px;">Text + Signals)</text>
+                        <text x="905" y="190" text-anchor="middle" style="font-size: 12px; fill: #00b8a9; font-weight: 700;">✓ Integrated AI</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Tab 3: Crossing the Chasm -->
+            <div id="tab3" class="tab-content">
+                <h2>🌊 การข้ามเหวลึก (Crossing the Chasm)</h2>
+                <p class="mb-4">จากแล็บสู่หน้างานจริง: "ปัญหา" → "เหวลึก" → "ทางออก"</p>
+                <div class="svg-container">
+                    <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Land 1: Problems -->
+                        <rect x="10" y="10" width="280" height="480" rx="15" class="svg-chasm-land" stroke-width="2"/>
+                        <text x="150" y="50" text-anchor="middle" style="font-size: 18px; font-weight: 700; fill: #b91c1c;">⚠️ ฝั่งปัญหา</text>
+
+                        <rect x="30" y="80" width="240" height="110" rx="8" class="svg-chasm-problem" stroke-width="2"/>
+                        <text x="150" y="105" text-anchor="middle" style="font-weight: 700; font-size: 13px;">Artifacts</text>
+                        <text x="150" y="130" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">ภาพเบลอ, เสียงรบกวน</text>
+                        <text x="150" y="145" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">คุณภาพต่ำ</text>
+
+                        <rect x="30" y="200" width="240" height="120" rx="8" class="svg-chasm-problem" stroke-width="2"/>
+                        <text x="150" y="225" text-anchor="middle" style="font-weight: 700; font-size: 13px;">Acquisition</text>
+                        <text x="150" y="245" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">Siemens vs GE</text>
+                        <text x="150" y="260" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">โรงพยาบาลต่างแห่ง</text>
+                        <text x="150" y="275" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">ตั้งค่าไม่เหมือนกัน</text>
+
+                        <rect x="30" y="330" width="240" height="110" rx="8" class="svg-chasm-problem" stroke-width="2"/>
+                        <text x="150" y="355" text-anchor="middle" style="font-weight: 700; font-size: 13px;">Missing Data</text>
+                        <text x="150" y="380" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">ข้อมูลไม่ครบถ้วน</text>
+                        <text x="150" y="395" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">ขาด Metadata</text>
+
+                        <!-- The Chasm -->
+                        <text x="500" y="200" text-anchor="middle" style="font-size: 50px;">🌊</text>
+                        <text x="500" y="240" text-anchor="middle" style="font-size: 18px; font-weight: 700; fill: #1f2937;">เหวลึก</text>
+                        <text x="500" y="265" text-anchor="middle" style="font-size: 13px; fill: #4b5563;">Lab ↔ Real World</text>
+
+                        <!-- The Bridge -->
+                        <path d="M 290 100 L 710 100 L 690 380 L 310 380 Z" class="svg-bridge"/>
+                        <text x="500" y="300" text-anchor="middle" style="font-size: 20px; font-weight: 700; fill: #a16207;">สะพาน</text>
+                        <text x="500" y="330" text-anchor="middle" style="font-size: 13px; fill: #854d0e;">(Platforms & Open-Source)</text>
+
+                        <!-- Land 2: Solutions -->
+                        <rect x="710" y="10" width="280" height="480" rx="15" class="svg-chasm-land" stroke-width="2"/>
+                        <text x="850" y="50" text-anchor="middle" style="font-size: 18px; font-weight: 700; fill: #15803d;">✅ ฝั่งทางออก</text>
+
+                        <rect x="730" y="80" width="240" height="100" rx="8" class="svg-chasm-solution" stroke-width="2"/>
+                        <text x="850" y="110" text-anchor="middle" style="font-weight: 700; font-size: 13px;">Data Access</text>
+                        <text x="850" y="135" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">Governance Framework</text>
+
+                        <rect x="730" y="190" width="240" height="100" rx="8" class="svg-chasm-solution" stroke-width="2"/>
+                        <text x="850" y="220" text-anchor="middle" style="font-weight: 700; font-size: 13px;">Easy to Use</text>
+                        <text x="850" y="245" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">Seamless Workflow</text>
+
+                        <rect x="730" y="300" width="240" height="100" rx="8" class="svg-chasm-solution" stroke-width="2"/>
+                        <text x="850" y="330" text-anchor="middle" style="font-weight: 700; font-size: 13px;">Integrated</text>
+                        <text x="850" y="355" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">PACS/HIS Architecture</text>
+
+                        <rect x="730" y="410" width="240" height="70" rx="8" class="svg-chasm-solution" stroke-width="2"/>
+                        <text x="850" y="435" text-anchor="middle" style="font-weight: 700; font-size: 13px;">Generates Value</text>
+                        <text x="850" y="455" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">Clear KPI & ROI</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Tab 4: AI Safety Lifecycle -->
+            <div id="tab4" class="tab-content">
+                <h2>🔒 วงจรความปลอดภัย AI (Safety Lifecycle)</h2>
+                <p class="mb-4">ความปลอดภัยเป็น "วงจร" ไม่ใช่เพียงแค่ตรวจสอบครั้งเดียว</p>
+                <div class="svg-container">
+                    <svg viewBox="0 0 1000 300" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Phase 1 -->
+                        <rect x="20" y="20" width="280" height="200" rx="10" fill="#dbeafe" class="svg-node" stroke="#0066cc" stroke-width="2"/>
+                        <text x="160" y="50" text-anchor="middle" style="font-size: 16px; font-weight: 700; fill: #0066cc;">1. Pre-Deployment</text>
+                        <text x="160" y="75" text-anchor="middle" class="svg-node-text" style="font-size: 13px; font-weight: 600;">ตรวจสอบก่อนใช้</text>
+                        <text x="160" y="100" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">• Due Diligence</text>
+                        <text x="160" y="120" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">• Validation & QA</text>
+                        <text x="160" y="140" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">• Bias Testing</text>
+
+                        <!-- Arrow -->
+                        <path d="M 305 120 L 345 120" class="svg-connector" />
+                        <text x="325" y="110" text-anchor="middle" style="font-size: 11px; fill: #00b8a9; font-weight: 700;">Deploy</text>
+
+                        <!-- Phase 2 -->
+                        <rect x="350" y="20" width="280" height="200" rx="10" fill="#dbeafe" class="svg-node" stroke="#0066cc" stroke-width="2"/>
+                        <text x="490" y="50" text-anchor="middle" style="font-size: 16px; font-weight: 700; fill: #0066cc;">2. Live</text>
+                        <text x="490" y="75" text-anchor="middle" class="svg-node-text" style="font-size: 13px; font-weight: 600;">เฝ้าระวังระหว่างใช้</text>
+                        <text x="490" y="100" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">• Real-time Monitoring</text>
+                        <text x="490" y="120" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">• Guardrails</text>
+                        <text x="490" y="140" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">• Confidence Scores</text>
+
+                        <!-- Arrow -->
+                        <path d="M 635 120 L 675 120" class="svg-connector" />
+                        <text x="655" y="110" text-anchor="middle" style="font-size: 11px; fill: #00b8a9; font-weight: 700;">Monitor</text>
+
+                        <!-- Phase 3 -->
+                        <rect x="680" y="20" width="280" height="200" rx="10" fill="#dbeafe" class="svg-node" stroke="#0066cc" stroke-width="2"/>
+                        <text x="820" y="50" text-anchor="middle" style="font-size: 16px; font-weight: 700; fill: #0066cc;">3. Post-Deploy</text>
+                        <text x="820" y="75" text-anchor="middle" class="svg-node-text" style="font-size: 13px; font-weight: 600;">บริหารความรับผิด</text>
+                        <text x="820" y="100" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">• PMS (Surveillance)</text>
+                        <text x="820" y="120" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">• Drift Detection</text>
+                        <text x="820" y="140" text-anchor="middle" class="svg-node-text" style="font-size: 12px;">• Recalibration</text>
+
+                        <!-- Lifecycle Loop -->
+                        <path d="M 500 230 Q 500 290 200 290 Q 200 260 200 230" class="svg-connector svg-connector-dashed" marker-end="none"/>
+                        <path d="M 490 240 L 500 230" class="svg-connector" marker-end="url(#arrowhead)"/>
+                        <text x="350" y="280" text-anchor="middle" style="font-size: 13px; fill: #0066cc; font-weight: 700;">📊 Continuous Improvement Cycle</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Tab 5: Real-World Integration -->
+            <div id="tab5" class="tab-content">
+                <h2>🔗 การบูรณาการจริง (Real-World Integration)</h2>
+                <p class="mb-4">AI ทำงานร่วมกับระบบหน้างาน: ไหลเวียน, ชั้นลง, และวิเคราะห์</p>
+                <div class="grid-container">
+                    <div class="mini-diagram">
+                        <h3>📊 Workflow Integration</h3>
+                        <svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="10" width="180" height="70" rx="5" fill="#e0e7ff" stroke="#0066cc" stroke-width="2"/>
+                            <text x="100" y="40" text-anchor="middle" style="font-weight: 700; font-size: 13px; fill: #0066cc;">PACS / RIS</text>
+
+                            <path d="M 100 85 L 100 115" class="svg-connector" />
+
+                            <rect x="10" y="120" width="180" height="70" rx="5" fill="#c7d2fe" stroke="#4f46e5" stroke-width="2"/>
+                            <text x="100" y="145" text-anchor="middle" style="font-weight: 700; font-size: 13px; fill: #4f46e5;">AI Engine</text>
+                            <text x="100" y="165" text-anchor="middle" style="font-size: 11px; fill: #4f46e5;">(Background)</text>
+
+                            <path d="M 100 195 L 100 225" class="svg-connector" />
+
+                            <rect x="10" y="230" width="180" height="60" rx="5" fill="#dcfce7" stroke="#00b8a9" stroke-width="2"/>
+                            <text x="100" y="260" text-anchor="middle" style="font-weight: 700; font-size: 12px; fill: #00b8a9;">Clinical Display</text>
+                        </svg>
+                    </div>
+
+                    <div class="mini-diagram">
+                        <h3>⚡ Speed-up Cycle</h3>
+                        <svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg">
+                            <text x="60" y="20" text-anchor="middle" style="font-weight: 700; font-size: 12px; fill: #dc2626;">Manual (6+2 mo)</text>
+                            <rect x="10" y="30" width="100" height="60" rx="5" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+                            <text x="60" y="65" text-anchor="middle" style="font-size: 12px;">Collect</text>
+                            <path d="M 60 95 L 60 125" class="svg-connector" />
+                            <rect x="10" y="130" width="100" height="60" rx="5" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+                            <text x="60" y="165" text-anchor="middle" style="font-size: 12px;">Analyze</text>
+
+                            <text x="260" y="20" text-anchor="middle" style="font-weight: 700; font-size: 12px; fill: #16a34a;">AI (Real-time)</text>
+                            <rect x="210" y="30" width="100" height="50" rx="5" fill="#dcfce7" stroke="#00b8a9" stroke-width="2"/>
+                            <text x="260" y="60" text-anchor="middle" style="font-size: 12px;">Collect</text>
+                            <path d="M 260 85 L 260 115" class="svg-connector" />
+                            <rect x="210" y="120" width="100" height="50" rx="5" fill="#dcfce7" stroke="#00b8a9" stroke-width="2"/>
+                            <text x="260" y="150" text-anchor="middle" style="font-size: 12px;">Analyze</text>
+                            <path d="M 260 175 L 260 205" class="svg-connector" />
+                            <rect x="210" y="210" width="100" height="50" rx="5" fill="#bbf7d0" stroke="#00b8a9" stroke-width="2"/>
+                            <text x="260" y="237" text-anchor="middle" style="font-size: 11px; font-weight: 700;">Act ✓</text>
+                        </svg>
+                    </div>
+
+                    <div class="mini-diagram">
+                        <h3>🌿 Operations AI</h3>
+                        <svg viewBox="0 0 280 300" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="40" y="10" width="200" height="70" rx="5" fill="#dbeafe" stroke="#0066cc" stroke-width="2"/>
+                            <text x="140" y="35" text-anchor="middle" style="font-weight: 700; font-size: 13px; fill: #0066cc;">AI for Insights</text>
+                            <text x="140" y="55" text-anchor="middle" style="font-size: 11px; fill: #0066cc;">(Process Understanding)</text>
+
+                            <path d="M 140 85 L 140 115" class="svg-connector" marker-end="none"/>
+                            <path d="M 140 115 L 100 145 M 140 115 L 180 145" class="svg-connector" />
+
+                            <rect x="20" y="150" width="140" height="130" rx="5" fill="#dcfce7" stroke="#00b8a9" stroke-width="2"/>
+                            <text x="90" y="175" text-anchor="middle" style="font-weight: 700; font-size: 12px; fill: #00b8a9;">Patient Flow</text>
+                            <text x="90" y="195" text-anchor="middle" style="font-size: 11px;">Analysis</text>
+                            <text x="90" y="210" text-anchor="middle" style="font-size: 10px;">(Bottleneck ID)</text>
+
+                            <rect x="120" y="150" width="140" height="130" rx="5" fill="#dcfce7" stroke="#00b8a9" stroke-width="2"/>
+                            <text x="190" y="175" text-anchor="middle" style="font-weight: 700; font-size: 12px; fill: #00b8a9;">Surveillance</text>
+                            <text x="190" y="195" text-anchor="middle" style="font-size: 11px;">Health Monitoring</text>
+                            <text x="190" y="210" text-anchor="middle" style="font-size: 10px;">(Outbreak Detection)</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 6: Executive Questions -->
+            <div id="tab6" class="tab-content">
+                <h2>🎯 5 คำถามสำคัญสำหรับผู้บริหาร (Executive Questions)</h2>
+                <p class="mb-6">คำถามสำคัญที่ทีมผู้บริหารควรพิจารณา:</p>
+                
+                <div class="exec-question">
+                    <p>1️⃣ AI Commoditisation</p>
+                    <p>"ความได้เปรียบของเราจะมาจาก 'สร้าง' AI เอง หรือมาจาก 'ประยุกต์ใช้' AI ในกระบวนการได้ดีกว่าคู่แข่ง?"</p>
+                </div>
+
+                <div class="exec-question">
+                    <p>2️⃣ Longer Requirements</p>
+                    <p>"ทีมกฎหมาย/Compliance/IT Security ของเรา 'พร้อม' สำหรับข้อกำหนด Ethical & Safety เฉพาะของ AI หรือยัง?"</p>
+                </div>
+
+                <div class="exec-question">
+                    <p>3️⃣ Better Foundation Models</p>
+                    <p>"เราจะ 'สร้าง' FM เอง (ต้นทุนสูง) หรือ 'ปรับแต่ง' FM ที่มี (ต้นทุนต่ำ)?"</p>
+                </div>
+
+                <div class="exec-question">
+                    <p>4️⃣ Digital Scalability</p>
+                    <p>"เราจะใช้ 'ความสามารถขยายตัว' ของ AI เพื่อบรรลุเป้าหมายเชิงกลยุทธ์ (Telemedicine, Value-Based Care) ได้อย่างไร?"</p>
+                </div>
+
+                <div class="exec-question">
+                    <p>5️⃣ Scalable Solution</p>
+                    <p>"เรากำลังสร้าง 'ไซโล AI' หรือไม่? เราจะไปสู่ 'Platform Strategy' เพื่อการเติบโตยั่งยืนได้อย่างไร?"</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    button.classList.add('active');
+                    const targetTab = document.getElementById(button.dataset.tab);
+                    if (targetTab) {
+                        targetTab.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
+        .tab-btn {
+            @apply px-4 py-3 text-sm font-semibold text-gray-600 border-b-2 border-transparent rounded-t-lg hover:text-blue-700 hover:border-blue-300 transition-all;
+        }
+        .tab-btn.active {
+            @apply text-blue-700 border-blue-700;
+        }
+        .tab-content {
+            @apply hidden p-6 md:p-10 bg-white rounded-b-lg shadow-lg border border-gray-200;
+        }
+        .tab-content.active {
+            @apply block;
+        }
+        
+        /* --- SVG Styles --- */
+        .svg-container {
+            @apply w-full h-auto overflow-auto;
+        }
+        .svg-node {
+            stroke: #cbd5e1; /* gray-300 */
+            stroke-width: 1;
+        }
+        .svg-node-title {
+            font-size: 14px;
+            font-weight: 600;
+            fill: #1e3a8a; /* blue-900 */
+        }
+        .svg-node-text {
+            font-size: 12px;
+            fill: #374151; /* gray-700 */
+        }
+        .svg-connector {
+            stroke: #9ca3af; /* gray-400 */
+            stroke-width: 2;
+            marker-end: url(#arrowhead);
+        }
+        .svg-connector-dashed {
+            stroke-dasharray: 5, 5;
+        }
+        .svg-bridge {
+            fill: #fef9c3; /* yellow-100 */
+            stroke: #fde047; /* yellow-400 */
+            stroke-width: 2;
+        }
+        .svg-chasm-land {
+            fill: #f8fafc; /* gray-50 */
+            stroke: #e2e8f0; /* gray-200 */
+        }
+        .svg-chasm-problem {
+            fill: #fee2e2; /* red-100 */
+            stroke: #fca5a5; /* red-300 */
+        }
+        .svg-chasm-solution {
+            fill: #dcfce7; /* green-100 */
+            stroke: #86efac; /* green-300 */
+        }
+
+        /* --- Tab 6 Styles --- */
+        .exec-question {
+            @apply bg-yellow-50 border-l-4 border-yellow-400 p-5 shadow-md;
+        }
+
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">ผังแนวคิด Medical AI Ecosystem (ฉบับ Diagram & Flowchart)</h1>
+        <p class="text-lg text-gray-600 mb-6">สรุปตรรกะและแนวคิดจากการบรรยายโดย Dr. Jorge Cardoso (เรียบเรียงโดย ภก.วิรุณ เวชศิริ)</p>
+
+        <!-- SVG Definitions (Arrowhead) -->
+        <svg width="0" height="0" class="absolute">
+            <defs>
+                <marker
+                    id="arrowhead"
+                    viewBox="0 0 10 10"
+                    refX="5"
+                    refY="5"
+                    markerWidth="6"
+                    markerHeight="6"
+                    orient="auto-start-reverse">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#9ca3af" />
+                </marker>
+            </defs>
+        </svg>
+
+        <!-- Tab Buttons -->
+        <div class="border-b border-gray-200">
+            <nav class="flex flex-wrap -mb-px" aria-label="Tabs">
+                <button class="tab-btn active" data-tab="tab1">1. 5 คันโยกแห่งคุณค่า (Hub-Spoke)</button>
+                <button class="tab-btn" data-tab="tab2">2. 4 ระดับวุฒิภาวะ AI (Flowchart)</button>
+                <button class="tab-btn" data-tab="tab3">3. การข้ามเหวลึก (Bridge Diagram)</button>
+                <button class="tab-btn" data-tab="tab4">4. วงจรความปลอดภัย (Flowchart)</button>
+                <button class="tab-btn" data-tab="tab5">5. การบูรณาการจริง (Flowcharts)</button>
+                <button class="tab-btn" data-tab="tab6">6. 5 คำถามสำหรับผู้บริหาร</button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-content-container">
+
+            <!-- Tab 1: 5 Levers of Value (Hub-Spoke Diagram) -->
+            <div id="tab1" class="tab-content active">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-center">ผังที่ 1: 5 คันโยกสำคัญที่ AI สร้างคุณค่า (Hub-Spoke Diagram)</h2>
+                <p class="text-gray-600 mb-8 text-center">แผนภาพแสดง AI เป็น "ศูนย์กลาง" (Hub) และยิง "เส้นเชื่อม" (Connectors) ไปยัง 5 คุณค่าหลัก (Spokes) ในระบบสาธารณสุข</p>
+                <div class="svg-container">
+                    <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        
+                        <!-- Connectors Lines -->
+                        <line x1="300" y1="200" x2="150" y2="80" class="svg-connector svg-connector-dashed" />
+                        <line x1="300" y1="200" x2="300" y2="80" class="svg-connector svg-connector-dashed" />
+                        <line x1="300" y1="200" x2="450" y2="80" class="svg-connector svg-connector-dashed" />
+                        <line x1="300" y1="200" x2="200" y2="320" class="svg-connector svg-connector-dashed" />
+                        <line x1="300" y1="200" x2="400" y2="320" class="svg-connector svg-connector-dashed" />
+
+                        <!-- Central Hub -->
+                        <circle cx="300" cy="200" r="70" fill="#2563eb" class="svg-node" />
+                        <foreignObject x="250" y="175" width="100" height="50">
+                            <div class="text-center text-white">
+                                <div class="text-3xl">🤖</div>
+                                <div class="font-bold text-lg">Medical AI</div>
+                            </div>
+                        </foreignObject>
+                        
+                        <!-- Spokes -->
+                        <!-- Spoke 1 -->
+                        <circle cx="150" cy="80" r="50" fill="#eff6ff" class="svg-node" />
+                        <foreignObject x="110" y="60" width="80" height="40">
+                            <div class="text-center">
+                                <div class="text-2xl">🧑‍⚕️</div>
+                                <div class="svg-node-title">การดูแลผู้ป่วย</div>
+                            </div>
+                        </foreignObject>
+                        <!-- Spoke 2 -->
+                        <circle cx="300" cy="80" r="50" fill="#eff6ff" class="svg-node" />
+                        <foreignObject x="260" y="60" width="80" height="40">
+                            <div class="text-center">
+                                <div class="text-2xl">⏱️</div>
+                                <div class="svg-node-title">ประสิทธิภาพคลินิก</div>
+                            </div>
+                        </foreignObject>
+                        <!-- Spoke 3 -->
+                        <circle cx="450" cy="80" r="50" fill="#eff6ff" class="svg-node" />
+                        <foreignObject x="410" y="60" width="80" height="40">
+                            <div class="text-center">
+                                <div class="text-2xl">💊</div>
+                                <div class="svg-node-title">การพัฒนายา</div>
+                            </div>
+                        </foreignObject>
+                        <!-- Spoke 4 -->
+                        <circle cx="200" cy="320" r="50" fill="#eff6ff" class="svg-node" />
+                        <foreignObject x="160" y="300" width="80" height="40">
+                            <div class="text-center">
+                                <div class="text-2xl">🏥</div>
+                                <div class="svg-node-title">การปฏิบัติงาน</div>
+                            </div>
+                        </foreignObject>
+                        <!-- Spoke 5 -->
+                        <circle cx="400" cy="320" r="50" fill="#eff6ff" class="svg-node" />
+                        <foreignObject x="360" y="300" width="80" height="40">
+                            <div class="text-center">
+                                <div class="text-2xl">💎</div>
+                                <div class="svg-node-title">การแพทย์เน้นคุณค่า</div>
+                            </div>
+                        </foreignObject>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Tab 2: 4 Levels of AI Maturity (Flowchart) -->
+            <div id="tab2" class="tab-content">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">ผังที่ 2: 4 ระดับวุฒิภาวะ AI (Flowchart)</h2>
+                <p class="text-gray-600 mb-8 text-center">Flowchart แสดงวิวัฒนาการ 4 ระดับของ AI จาก "เครื่องมือ" สู่ "มันสมอง" พร้อมลูกศรแสดงทิศทาง</p>
+                <div class="svg-container">
+                    <svg viewBox="0 0 900 200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <!-- Nodes -->
+                        <!-- Node 1 -->
+                        <rect x="10" y="20" width="180" height="160" rx="10" fill="#dbeafe" class="svg-node" />
+                        <foreignObject x="20" y="30" width="160" height="140">
+                            <div class="p-2">
+                                <h3 class="svg-node-title">ระดับ 1: Single Purpose ("ค้อน")</h3>
+                                <p class="svg-node-text mt-2">AI "เครื่องมือเฉพาะจุด" (Point Solutions)</p>
+                                <ul class="svg-node-text mt-2 list-disc list-inside text-xs">
+                                    <li>Segmentation</li>
+                                    <li>Abnormality Detection</li>
+                                </ul>
+                                <p class="svg-node-text text-red-700 font-semibold mt-2 text-xs">ข้อจำกัด: สร้างไซโล</p>
+                            </div>
+                        </foreignObject>
+                        
+                        <!-- Arrow 1 -->
+                        <path d="M 195 100 L 235 100" class="svg-connector" />
+
+                        <!-- Node 2 -->
+                        <rect x="240" y="20" width="180" height="160" rx="10" fill="#e0e7ff" class="svg-node" />
+                        <foreignObject x="250" y="30" width="160" height="140">
+                            <div class="p-2">
+                                <h3 class="svg-node-title" style="fill: #3730a3;">ระดับ 2: Auto ML ("สายการผลิต")</h3>
+                                <p class="svg-node-text mt-2">ใช้เครื่องมือช่วย "สร้าง" AI อัตโนมัติ (MONAI, PyTorch)</p>
+                                <p class="svg-node-text text-gray-700 font-semibold mt-2 text-xs">ข้อจำกัด: ยังคงสร้างทีละโมเดล</p>
+                            </div>
+                        </foreignObject>
+
+                        <!-- Arrow 2 -->
+                        <path d="M 425 100 L 465 100" class="svg-connector" />
+
+                        <!-- Node 3 -->
+                        <rect x="470" y="20" width="180" height="160" rx="10" fill="#f3e8ff" class="svg-node" />
+                        <foreignObject x="480" y="30" width="160" height="140">
+                            <div class="p-2">
+                                <h3 class="svg-node-title" style="fill: #581c87;">ระดับ 3: Foundation Models ("โรงงาน")</h3>
+                                <p class="svg-node-text mt-2">"The Platform Play" ใช้โมเดลฐาน 1 ตัว แล้ว "Fine-tune"</p>
+                                <p class="svg-node-text text-gray-700 font-semibold mt-2 text-xs">การตัดสินใจ: Build vs. Buy vs. Fine-tune</p>
+                            </div>
+                        </foreignObject>
+
+                        <!-- Arrow 3 -->
+                        <path d="M 655 100 L 695 100" class="svg-connector" />
+
+                        <!-- Node 4 -->
+                        <rect x="700" y="20" width="180" height="160" rx="10" fill="#fce7f3" class="svg-node" />
+                        <foreignObject x="710" y="30" width="160" height="140">
+                            <div class="p-2">
+                                <h3 class="svg-node-title" style="fill: #831843;">ระดับ 4: Multimodal FM ("มันสมอง")</h3>
+                                <p class="svg-node-text mt-2">"The Organizational Brain" เข้าใจผู้ป่วยแบบองค์รวม</p>
+                                <ul class="svg-node-text mt-2 list-disc list-inside text-xs">
+                                    <li>ภาพ + ข้อความ</li>
+                                    <li>สัญญาณชีพ + พันธุกรรม</li>
+                                </ul>
+                            </div>
+                        </foreignObject>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Tab 3: Crossing the Chasm (Bridge Diagram) -->
+            <div id="tab3" class="tab-content">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-8 text-center">ผังที่ 3: การข้ามเหวลึก (Bridge Diagram)</h2>
+                <p class="text-gray-600 mb-8 text-center">Diagram แสดง "ฝั่งปัญหา" (ซ้าย), "เหวลึก" (กลาง), และ "สะพานแห่งทางออก" (ขวา) อย่างเป็นรูปธรรม</p>
+                <div class="svg-container">
+                    <svg viewBox="0 0 900 450" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <!-- Land 1: Problems -->
+                        <rect x="10" y="10" width="250" height="430" rx="15" class="svg-chasm-land" />
+                        <text x="135" y="50" font-size="18" font-weight="600" fill="#b91c1c" text-anchor="middle">ฝั่งปัญหา: "ความโกลาหลของข้อมูลจริง"</text>
+                        <rect x="30" y="80" width="210" height="100" rx="10" class="svg-chasm-problem" />
+                        <foreignObject x="40" y="90" width="190" height="80">
+                            <div class="p-1">
+                                <h4 class="font-bold text-gray-900">1. Artefacts (ภาพเพี้ยน)</h4>
+                                <p class="svg-node-text">ภาพสแกนเบลอ, มีสัญญาณรบกวน, คุณภาพต่ำ</p>
+                            </div>
+                        </foreignObject>
+                        <rect x="30" y="190" width="210" height="110" rx="10" class="svg-chasm-problem" />
+                        <foreignObject x="40" y="200" width="190" height="90">
+                            <div class="p-1">
+                                <h4 class="font-bold text-gray-900">2. Acquisition Differences</h4>
+                                <p class="svg-node-text">เครื่องมือคนละยี่ห้อ (Siemens vs. GE), โรงพยาบาลคนละแห่ง, ตั้งค่าไม่เหมือนกัน</p>
+                            </div>
+                        </foreignObject>
+                        <rect x="30" y="310" width="210" height="100" rx="10" class="svg-chasm-problem" />
+                        <foreignObject x="40" y="320" width="190" height="80">
+                            <div class="p-1">
+                                <h4 class="font-bold text-gray-900">3. Missing Data (ข้อมูลไม่ครบ)</h4>
+                                <p class="svg-node-text">ข้อมูลผู้ป่วยไม่ครบถ้วน, ขาด metadata สำคัญ</p>
+                            </div>
+                        </foreignObject>
+                        
+                        <!-- The Chasm -->
+                        <text x="445" y="200" font-size="30" font-weight="bold" fill="#374151" text-anchor="middle">🌊</text>
+                        <text x="445" y="240" font-size="24" font-weight="bold" fill="#1f2937" text-anchor="middle">"เหวลึก" (The Chasm)</text>
+                        <text x="445" y="270" font-size="14" fill="#4b5563" text-anchor="middle">ช่องว่างระหว่าง "แล็บ" กับ "หน้างานจริง"</text>
+                        
+                        <!-- The Bridge -->
+                        <path d="M 260 100 L 640 100 L 620 350 L 280 350 Z" class="svg-bridge" />
+                        <text x="445" y="300" font-size="20" font-weight="bold" fill="#a16207" text-anchor="middle">"สะพาน" (The Bridge)</text>
+                        <text x="445" y="325" font-size="14" fill="#854d0e" text-anchor="middle">(ขับเคลื่อนโดย Platforms & Open-Source)</text>
+                        <path d="M 260 100 L 280 350" class="svg-connector" marker-end="none" stroke-width="1" />
+                        <path d="M 640 100 L 620 350" class="svg-connector" marker-end="none" stroke-width="1" />
+                        
+                        <!-- Land 2: Solutions -->
+                        <rect x="640" y="10" width="250" height="430" rx="15" class="svg-chasm-land" />
+                        <text x="765" y="50" font-size="18" font-weight="600" fill="#15803d" text-anchor="middle">ฝั่งทางออก: "เสาหลัก 4 ประการ"</text>
+                        <rect x="660" y="80" width="210" height="75" rx="10" class="svg-chasm-solution" />
+                        <foreignObject x="670" y="90" width="190" height="55">
+                            <div class="p-1">
+                                <h4 class="font-bold text-gray-900">1. Data Access (การเข้าถึงข้อมูล)</h4>
+                                <p class="svg-node-text">แก้ปัญหา "ธรรมาภิบาล" (Governance)</p>
+                            </div>
+                        </foreignObject>
+                        <rect x="660" y="165" width="210" height="75" rx="10" class="svg-chasm-solution" />
+                        <foreignObject x="670" y="175" width="190" height="55">
+                            <div class="p-1">
+                                <h4 class="font-bold text-gray-900">2. Easy to Use (ใช้งานง่าย)</h4>
+                                <p class="svg-node-text">แก้ปัญหา "Workflow" (ต้องไร้รอยต่อ)</p>
+                            </div>
+                        </foreignObject>
+                        <rect x="660" y="250" width="210" height="75" rx="10" class="svg-chasm-solution" />
+                        <foreignObject x="670" y="260" width="190" height="55">
+                            <div class="p-1">
+                                <h4 class="font-bold text-gray-900">3. Integrated (การเชื่อมต่อ)</h4>
+                                <p class="svg-node-text">แก้ปัญหา "สถาปัตยกรรมไอที" (เชื่อม PACS/HIS)</p>
+                            </div>
+                        </foreignObject>
+                        <rect x="660" y="335" width="210" height="75" rx="10" class="svg-chasm-solution" />
+                        <foreignObject x="670" y="345" width="190" height="55">
+                            <div class="p-1">
+                                <h4 class="font-bold text-gray-900">4. Generates Value (สร้างคุณค่า)</h4>
+                                <p class="svg-node-text">แก้ปัญหา "Business Case" (มี KPI วัดผล)</p>
+                            </div>
+                        </foreignObject>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Tab 4: AI Safety Lifecycle (Flowchart) -->
+            <div id="tab4" class="tab-content">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">ผังที่ 4: วงจรความปลอดภัย AI (Lifecycle AI Safety Flowchart)</h2>
+                <p class="text-gray-600 mb-8 text-center">Flowchart 3 ขั้นตอนที่แสดง "วงจร" ความปลอดภัย (ไม่ใช่แค่ทำครั้งเดียวจบ) โดยมีลูกศรย้อนกลับเพื่อแสดงการปรับปรุงต่อเนื่อง</p>
+                <div class="svg-container">
+                    <svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <!-- Nodes -->
+                        <!-- Node 1 -->
+                        <rect x="20" y="20" width="260" height="160" rx="10" fill="#f0f9ff" class="svg-node" />
+                        <foreignObject x="30" y="30" width="240" height="140">
+                            <div class="p-2">
+                                <h3 class="svg-node-title text-xl">1. Pre-Deployment (ก่อนใช้)</h3>
+                                <p class="svg-node-text font-semibold mt-1">"การตรวจสอบสถานะ"</p>
+                                <ul class="svg-node-text mt-2 list-disc list-inside text-xs">
+                                    <li>Due Diligence (ตรวจสอบ)</li>
+                                    <li>Validation & QA (รับรองคุณภาพ)</li>
+                                    <li>ตรวจสอบ Bias (อคติ)</li>
+                                </ul>
+                            </div>
+                        </foreignObject>
+                        
+                        <!-- Arrow 1 -->
+                        <path d="M 285 100 L 315 100" class="svg-connector" />
+
+                        <!-- Node 2 -->
+                        <rect x="320" y="20" width="260" height="160" rx="10" fill="#f0f9ff" class="svg-node" />
+                        <foreignObject x="330" y="30" width="240" height="140">
+                            <div class="p-2">
+                                <h3 class="svg-node-title text-xl">2. Live (ระหว่างใช้)</h3>
+                                <p class="svg-node-text font-semibold mt-1">"การเฝ้าระวังเชิงปฏิบัติการ"</p>
+                                <ul class="svg-node-text mt-2 list-disc list-inside text-xs">
+                                    <li>Real-time Monitoring</li>
+                                    <li>Guardrails (เครื่องป้องกัน)</li>
+                                    <li>"Uncertainty" (การที่ AI รู้ว่าไม่มั่นใจ)</li>
+                                </ul>
+                            </div>
+                        </foreignObject>
+
+                        <!-- Arrow 2 -->
+                        <path d="M 585 100 L 615 100" class="svg-connector" />
+
+                        <!-- Node 3 -->
+                        <rect x="620" y="20" width="260" height="160" rx="10" fill="#f0f9ff" class="svg-node" />
+                        <foreignObject x="630" y="30" width="240" height="140">
+                            <div class="p-2">
+                                <h3 class="svg-node-title text-xl">3. Post-Deployment (หลังใช้)</h3>
+                                <p class="svg-node-text font-semibold mt-1">"การบริหารความรับผิดชอบ"</p>
+                                <ul class="svg-node-text mt-2 list-disc list-inside text-xs">
+                                    <li>**Post-Market Surveillance (PMS)**</li>
+                                    <li>ตรวจจับ Model Drift (ประสิทธิภาพลดลง)</li>
+                                    <li>Recalibration (ปรับเทียบใหม่)</li>
+                                </ul>
+                            </div>
+                        </foreignObject>
+
+                        <!-- Lifecycle Return Arrow -->
+                        <path d="M 750 180 Q 450 240 150 180" class="svg-connector svg-connector-dashed" fill="none" />
+                        <text x="450" y="225" font-size="12" fill="#4b5563" text-anchor="middle">วงจรปรับปรุงและเรียนรู้ (Improvement & Learning Loop)</text>
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- Tab 5: Real-World Integration (Flowcharts) -->
+            <div id="tab5" class="tab-content">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-8 text-center">ผังที่ 5: การบูรณาการสู่หน้างานจริง (Flowcharts)</h2>
+                <p class="text-gray-600 mb-8 text-center">3 Mini-Flowcharts แสดงการที่ AI "ซ่อนตัว" และ "ทำงานร่วม" กับระบบเดิม</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- Diagram 1: Workflow Integration -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-inner border border-gray-200">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4 text-center">1. ผังการเชื่อมต่อ Workflow (แนวตั้ง)</h3>
+                        <svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="w-full">
+                            <rect x="20" y="10" width="160" height="60" rx="5" fill="#e0e7ff" class="svg-node" />
+                            <text x="100" y="40" text-anchor="middle" class="svg-node-title" fill="#3730a3">PACS / RIS (ระบบเดิม)</text>
+                            
+                            <path d="M 100 75 L 100 105" class="svg-connector" />
+                            
+                            <rect x="20" y="110" width="160" height="80" rx="5" fill="#c7d2fe" class="svg-node" />
+                            <foreignObject x="30" y="120" width="140" height="60">
+                                <div class="text-center">
+                                    <div class="svg-node-title" fill="#3730a3">Live AI Engine</div>
+                                    <div class="svg-node-text text-xs">(ทำงานเบื้องหลัง)</div>
+                                </div>
+                            </foreignObject>
+                            
+                            <path d="M 100 195 L 100 225" class="svg-connector" />
+
+                            <rect x="20" y="230" width="160" height="60" rx="5" fill="#e0e7ff" class="svg-node" />
+                            <text x="100" y="260" text-anchor="middle" class="svg-node-title" fill="#3730a3">Clinical Review Interface (หน้าจอแพทย์)</text>
+                        </svg>
+                    </div>
+                    
+                    <!-- Diagram 2: Lifecycle Speed-up -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-inner border border-gray-200">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4 text-center">2. ผังเปรียบเทียบวงจรข้อมูล</h3>
+                        <svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="w-full">
+                            <!-- Before -->
+                            <text x="70" y="20" text-anchor="middle" font-weight="600" fill="#dc2626">วงจรเดิม (Manual)</text>
+                            <rect x="10" y="40" width="120" height="70" rx="5" fill="#fee2e2" class="svg-node" />
+                            <text x="70" y="75" text-anchor="middle" class="svg-node-text">รวบรวมข้อมูล<br/>(6 เดือน)</text>
+                            <path d="M 70 115 L 70 145" class="svg-connector" />
+                            <rect x="10" y="150" width="120" height="70" rx="5" fill="#fee2e2" class="svg-node" />
+                            <text x="70" y="185" text-anchor="middle" class="svg-node-text">วิเคราะห์<br/>(2 เดือน)</text>
+
+                            <!-- After -->
+                            <text x="250" y="20" text-anchor="middle" font-weight="600" fill="#16a34a">วงจรใหม่ (AI-driven)</text>
+                            <rect x="190" y="40" width="120" height="60" rx="5" fill="#dcfce7" class="svg-node" />
+                            <text x="250" y="70" text-anchor="middle" class="svg-node-text">รวบรวม</text>
+                            <path d="M 250 105 L 250 135" class="svg-connector" />
+                            <rect x="190" y="140" width="120" height="60" rx="5" fill="#dcfce7" class="svg-node" />
+                            <text x="250" y="170" text-anchor="middle" class="svg-node-text">วิเคราะห์</text>
+                            <path d="M 250 205 L 250 235" class="svg-connector" />
+                            <rect x="190" y="240" width="120" height="50" rx="5" fill="#bbf7d0" class="svg-node" />
+                            <text x="250" y="265" text-anchor="middle" class="svg-node-text font-bold">ดำเนินการ (Real-time)</text>
+                        </svg>
+                    </div>
+                    
+                    <!-- Diagram 3: Process Understanding -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-inner border border-gray-200">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4 text-center">3. ผังการเข้าใจกระบวนการ (แตกแขนง)</h3>
+                        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="w-full">
+                            <rect x="50" y="10" width="200" height="80" rx="5" fill="#dbeafe" class="svg-node" />
+                            <foreignObject x="60" y="20" width="180" height="60">
+                                <div class="text-center">
+                                    <div class="svg-node-title text-lg">AI for Operations</div>
+                                    <div class="svg-node-text">(AI เพื่อการเข้าใจกระบวนการ)</div>
+                                </div>
+                            </foreignObject>
+                            
+                            <!-- Branching lines -->
+                            <path d="M 150 90 L 150 130" class="svg-connector" marker-end="none" />
+                            <path d="M 150 130 L 100 170" class="svg-connector" />
+                            <path d="M 150 130 L 200 170" class="svg-connector" />
+
+                            <!-- Leaf Nodes -->
+                            <rect x="20" y="170" width="160" height="100" rx="5" fill="#f0f9ff" class="svg-node" />
+                            <foreignObject x="30" y="180" width="140" height="80">
+                                <div class="text-center">
+                                    <div class="text-3xl">📈</div>
+                                    <div class="svg-node-title">วิเคราะห์ Patient Flow</div>
+                                    <div class="svg-node-text text-xs">(หาจุดคอขวด)</div>
+                                </div>
+                            </foreignObject>
+                            
+                            <rect x="180" y="170" width="100" height="100" rx="5" fill="#f0f9ff" class="svg-node" />
+                            <foreignObject x="190" y="180" width="80" height="80">
+                                <div class="text-center">
+                                    <div class="text-3xl">📊</div>
+                                    <div class="svg-node-title">Health Surveillance</div>
+                                    <div class="svg-node-text text-xs">(เฝ้าระวังการระบาด)</div>
+                                </div>
+                            </foreignObject>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 6: 5 Executive Questions (List format) -->
+            <div id="tab6" class="tab-content">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">ผังที่ 6: 5 คำถามสำคัญสำหรับผู้บริหาร</h2>
+                <p class="text-gray-600 mb-6">(เนื่องจากส่วนนี้เป็น "คำถามเพื่อการไตร่ตรอง" (Reflection Questions) การนำเสนอแบบรายการ (List) จะสื่อสารได้ชัดเจนและตรงประเด็นที่สุดครับ)</p>
+                <div class="space-y-4">
+                    <div class="exec-question">
+                        <p class="font-semibold text-yellow-900">1. เรื่อง AI Commoditisation (AI คือโภคภัณฑ์):</p>
+                        <p class="text-gray-700 mt-1">"ความได้เปรียบของเราจะมาจากการ 'สร้าง' AI เอง หรือมาจากการ 'ประยุกต์ใช้' AI ใน Workflow ได้ดีกว่าคู่แข่ง?"</p>
+                    </div>
+                    <div class="exec-question">
+                        <p class="font-semibold text-yellow-900">2. เรื่อง Longer Requirements (ข้อกำหนดที่ซับซ้อน):</p>
+                        <p class="text-gray-700 mt-1">"ทีมกฎหมาย, Compliance, และ IT Security ของเรา 'พร้อม' สำหรับข้อกำหนดด้านจริธรรมและความปลอดภัยที่จำเพาะเจาะจงกับ AI แล้วหรือยัง?"</p>
+                    </div>
+                    <div class="exec-question">
+                        <p class="font-semibold text-yellow-900">3. เรื่อง Better Foundation Models (โมเดลฐานคืออนาคต):</p>
+                        <p class="text-gray-700 mt-1">"ยุทธศาสตร์ของเราคือ 'สร้าง' FM เอง (ต้นทุนสูง) หรือ 'เป็นพันธมิตร' เพื่อ 'ปรับแต่ง' (Fine-tune) FM ที่มีอยู่ (ต้นทุนต่ำกว่า)?"</p>
+                    </div>
+                    <div class="exec-question">
+                        <p class="font-semibold text-yellow-900">4. เรื่อง Digital Scalability (โอกาสในการขยายผล):</p>
+                        <p class="text-gray-700 mt-1">"เราจะใช้ 'คุณสมบัติการขยายตัว' ของ AI เพื่อบรรลุเป้าหมายเชิงกลยุทธ์ (เช่น Telemedicine, Value-Based Care) ได้อย่างไร?"</p>
+                    </div>
+                    <div class="exec-question">
+                        <p class="font-semibold text-yellow-900">5. เรื่อง Scalable Solution (ทางออกที่ยั่งยืน):</p>
+                        <p class="text-gray-700 mt-1">"เรากำลังสร้าง 'ไซโล AI' หรือไม่? เราจะปรับทิศทางองค์กรไปสู่ 'ยุทธศาสตร์แบบแพลตฟอร์ม' (Platform Strategy) เพื่อการเติบโตที่ยั่งยืนได้อย่างไร?"</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Deactivate all
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    // Activate clicked
+                    button.classList.add('active');
+                    const targetTab = document.getElementById(button.dataset.tab);
+                    if (targetTab) {
+                        targetTab.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
+

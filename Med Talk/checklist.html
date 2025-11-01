@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist: กลยุทธ์โรงพยาบาลดิจิทัล</title>
+    <!-- โหลด Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* ใช้ฟอนต์ Sarabun */
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f4f7f6; /* สีพื้นหลังเทาอ่อน */
+        }
+        /* สไตล์สำหรับ checkbox ที่ติ๊กแล้ว */
+        .completed {
+            text-decoration: line-through;
+            color: #6b7280; /* gray-500 */
+        }
+        /* ปรับแต่ง checkbox */
+        input[type="checkbox"] {
+            width: 1.25rem; /* 20px */
+            height: 1.25rem; /* 20px */
+            margin-right: 0.75rem; /* 12px */
+            cursor: pointer;
+            accent-color: #3b82f6; /* blue-600 */
+        }
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 1rem; /* 16px */
+            border-radius: 0.5rem; /* 8px */
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            transition: background-color 0.2s;
+        }
+        .checklist-item:hover {
+            background-color: #f9fafb; /* gray-50 */
+        }
+        .progress-bar-container {
+            width: 100%;
+            background-color: #e5e7eb; /* gray-200 */
+            border-radius: 0.5rem; /* 8px */
+            overflow: hidden;
+            margin-bottom: 0.5rem; /* 8px */
+        }
+        .progress-bar {
+            height: 1.5rem; /* 24px */
+            width: 0%; /* เริ่มต้นที่ 0% */
+            background-color: #3b82f6; /* blue-600 */
+            transition: width 0.3s ease-in-out;
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            line-height: 1.5rem; /* 24px */
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8">
+        <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-2">
+            Checklist: กลยุทธ์โรงพยาบาลดิจิทัล
+        </h1>
+        <p class="text-center text-gray-600 mb-6">
+            (ตามแนวทาง Med talk Apollo โดย นพ.พร้อมพงศ์ โยธาราษฎร์)
+        </p>
+
+        <!-- ส่วนของ Progress Bar -->
+        <div class="mb-6 sticky top-0 bg-white py-4 z-10">
+            <div class="progress-bar-container">
+                <div id="progressBar" class="progress-bar">0%</div>
+            </div>
+            <div id="progressText" class="text-center font-semibold text-gray-700">ความคืบหน้า: 0 / 20</div>
+            <button id="resetButton" class="w-full mt-3 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition">
+                รีเซ็ต Checklist
+            </button>
+        </div>
+
+        <!-- รายการ Checklist -->
+        <div id="checklistContainer" class="space-y-4">
+
+            <!-- Section 1: การวางกลยุทธ์ -->
+            <h2 class="text-xl font-bold text-blue-700 border-b-2 border-blue-200 pb-2 mb-3">
+                🎯 1. การวางกลยุทธ์ (Strategy & Frameworks)
+            </h2>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>ได้ทำ ERRC Framework (ขจัด-ลด-เพิ่ม-สร้าง) แล้วหรือยัง?</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>ขจัด "ห้องบัตร" และ "กระดาษ" ในกระบวนการหลักแล้วหรือยัง?</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>สร้าง "Telemedicine" หรือ "ระบบเช็กสิทธิ์ออนไลน์" แล้วหรือยัง?</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>ประเมิน Digital Capability (ศักยภาพดิจิทัล) เทียบกับคู่แข่งหรือยัง?</span>
+            </label>
+
+            <!-- Section 2: การยกระดับการรักษา -->
+            <h2 class="text-xl font-bold text-blue-700 border-b-2 border-blue-200 pb-2 mt-6 mb-3">
+                ❤️‍🩹 2. การยกระดับการรักษา (Clinical Excellence)
+            </h2>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>มีระบบ Alert "Sepsis" แบบ Real-time หรือไม่? (เช่น เด้งเตือนผ่าน LINE)</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>ระบบ Alert ช่วยให้ "ให้ยาฆ่าเชื้อได้ไวขึ้น" จริงหรือไม่? (มีการวัดผล)</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>มีการติดตามผลลัพธ์ (เช่น อัตราการเสียชีวิต Sepsis) อย่างเป็นรูปธรรมหรือไม่?</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>มีเป้าหมาย % "ความสมบูรณ์เวชระเบียน" (Med Record) ที่ชัดเจนหรือไม่? (เช่น >85%)</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>สามารถ Drill-down ดูความสมบูรณ์ของ Med Record "รายแพทย์" ได้หรือไม่?</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>มีระบบแจ้งเตือน "ผลรังสีวิทยาวิกฤต" (Critical Radiology Result) ให้แพทย์หรือไม่?</span>
+            </label>
+
+            <!-- Section 3: การเพิ่มประสิทธิภาพ -->
+            <h2 class="text-xl font-bold text-blue-700 border-b-2 border-blue-200 pb-2 mt-6 mb-3">
+                🛠️ 3. การเพิ่มประสิทธิภาพ (Operational & Financial)
+            </h2>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>มีระบบ "ตรวจสอบสิทธิ์" (เช่น ประกันสังคม) แบบ Real-time ที่หน้า VN หรือไม่?</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>ระบบเช็กสิทธิ์ช่วย "ลดค่าใช้จ่ายจากการให้สิทธิผิด" ได้จริงหรือไม่? (มีการวัดผล)</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>มีการติดตาม "MOS" (Month of Supply) ของคลังยาหรือไม่?</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>ตั้งเป้าลด MOS (เช่น เหลือ ~28 วัน) เพื่อ "ปลดล็อกเงินทุน" หรือไม่?</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>มีการนำ AI มาช่วย "ทำนายสต็อกยา" (Inventory Prediction) หรือไม่?</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>ผู้บริหารมี Dashboard ที่แสดง "AdjRW" และ "Wt.Los" เพื่อบริหารวันนอน (LOS) หรือไม่?</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>มีการ Monitor "คนไข้นอนเกิน Wt.Los" เพื่อป้องกัน "การกินเนื้อ (ขาดทุน)" หรือไม่?</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>มีระบบ Monitor "เวลารอคอย" (Waiting Time) และแจ้งเตือนหัวหน้าแผนกหรือไม่?</span>
+            </label>
+
+            <!-- Section 4: การมองไปข้างหน้า -->
+            <h2 class="text-xl font-bold text-blue-700 border-b-2 border-blue-200 pb-2 mt-6 mb-3">
+                🚀 4. การมองไปข้างหน้า (Future & AI)
+            </h2>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>มีการนำ AI มาใช้วิเคราะห์ข้อมูลเชิงลึก (เช่น พฤติกรรมผู้ป่วยเบาหวาน/สูบบุหรี่) หรือไม่?</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onchange="updateProgress(this)">
+                <span>มี "แผนที่ใยแมงมุม" (Spider Chart) ที่กำหนดเป้าหมาย Digital Capability ในอีก 1, 3, 5 ปีข้างหน้าหรือไม่?</span>
+            </label>
+        </div>
+    </div>
+
+    <script>
+        // ส่วนของ JavaScript
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const checklistContainer = document.getElementById('checklistContainer');
+        const checkboxes = checklistContainer.querySelectorAll('input[type="checkbox"]');
+        const resetButton = document.getElementById('resetButton');
+        const totalItems = checkboxes.length;
+
+        function updateProgress(checkbox) {
+            // สลับคลาส 'completed' บน parent label
+            checkbox.parentElement.classList.toggle('completed', checkbox.checked);
+            
+            // นับจำนวนที่ติ๊ก
+            let checkedCount = 0;
+            checkboxes.forEach(item => {
+                if (item.checked) {
+                    checkedCount++;
+                }
+            });
+
+            // คำนวณเปอร์เซ็นต์
+            const percentage = totalItems > 0 ? Math.round((checkedCount / totalItems) * 100) : 0;
+
+            // อัปเดต Progress Bar
+            progressBar.style.width = percentage + '%';
+            progressBar.textContent = percentage + '%';
+
+            // อัปเดต Text
+            progressText.textContent = `ความคืบหน้า: ${checkedCount} / ${totalItems}`;
+        }
+        
+        // ฟังก์ชันสำหรับปุ่ม Reset
+        resetButton.addEventListener('click', () => {
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+                checkbox.parentElement.classList.remove('completed');
+            });
+            // อัปเดต progress หลัง reset
+            updateProgress(checkboxes[0]); 
+        });
+
+        // อัปเดตครั้งแรกเมื่อโหลดหน้า
+        updateProgress(checkboxes[0]);
+    </script>
+
+</body>
+</html>

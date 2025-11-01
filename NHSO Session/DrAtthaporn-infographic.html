@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale-1.0">
+    <title>Infographic: ภาพรวมระบบการเงินการคลังสุขภาพไทย</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', 'Kanit', sans-serif;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&family=Inter:wght@300;400;500;700&display=swap');
+    </style>
+</head>
+<body class="bg-gray-100 p-6 md:p-12">
+
+    <div class="max-w-7xl mx-auto">
+        
+        <header class="text-center mb-12">
+            <h1 class="text-3xl md:text-5xl font-bold text-blue-900">ภาพรวมระบบการเงินการคลังสุขภาพไทย</h1>
+            <p class="text-xl text-gray-600 mt-2">สรุปประเด็นสำคัญจากการบรรยาย "Healthcare financing and national health security system"</p>
+        </header>
+
+        <!-- 1. แหล่งเงิน และ 3 กองทุนหลัก -->
+        <div class="bg-white p-6 md:p-8 rounded-2xl shadow-xl mb-8 border-t-8 border-blue-500">
+            <h2 class="text-3xl font-bold text-blue-800 mb-6">1. แหล่งเงินทุน และ 3 กองทุนหลัก</h2>
+            
+            <div class="flex flex-col md:flex-row items-center mb-6 bg-blue-50 p-4 rounded-lg">
+                <svg class="w-16 h-16 text-blue-500 mb-4 md:mb-0 md:mr-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V6.375c0-.621.504-1.125 1.125-1.125h.375m16.5 0h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375M3.75 21v-6.125c0-.621.504-1.125 1.125-1.125h13.5c.621 0 1.125.504 1.125 1.125V21" />
+                </svg>
+                <div>
+                    <h3 class="text-2xl font-semibold text-gray-800">แหล่งเงินทุนหลัก: ภาษี (Taxation)</h3>
+                    <p class="text-gray-600">เงินในระบบสุขภาพไทยเกือบทั้งหมดมาจาก "ภาษี" ทั้งทางตรง (ภาษีเงินได้) และทางอ้อม (VAT, สรรพสามิต) ผ่านกระบวนการ: <span class="font-semibold">Collection -> Pooling -> Purchasing</span></p>
+                </div>
+            </div>
+            
+            <!-- 3 กองทุน -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- ข้าราชการ -->
+                <div class="bg-gray-50 rounded-lg p-5 border-l-4 border-yellow-500">
+                    <h4 class="text-xl font-bold text-yellow-800">1. สวัสดิการข้าราชการ (CSMBS)</h4>
+                    <p class="text-sm text-gray-500">เริ่มปี 2523</p>
+                    <ul class="mt-3 list-disc list-inside text-gray-700 space-y-1">
+                        <li><span class="font-semibold">แหล่งเงิน:</span> ภาษี 100%</li>
+                        <li><span class="font-semibold">ผู้มีสิทธิ์:</span> ข้าราชการ, บำนาญ, ครอบครัว (พ่อ,แม่,คู่สมรส,บุตร)</li>
+                        <li><span class="font-semibold">การใช้สิทธิ์:</span> ไม่ต้องเลือก รพ.</li>
+                    </ul>
+                </div>
+                <!-- ประกันสังคม -->
+                <div class="bg-gray-50 rounded-lg p-5 border-l-4 border-blue-500">
+                    <h4 class="text-xl font-bold text-blue-800">2. ประกันสังคม (SSS)</h4>
+                    <p class="text-sm text-gray-500">เริ่มปี 2533</p>
+                    <ul class="mt-3 list-disc list-inside text-gray-700 space-y-1">
+                        <li><span class="font-semibold">แหล่งเงิน:</span> 3 ฝ่าย (ลูกจ้าง, นายจ้าง, รัฐ)</li>
+                        <li><span class="font-semibold">ผู้มีสิทธิ์:</span> ลูกจ้างในระบบ</li>
+                        <li><span class="font-semibold">การใช้สิทธิ์:</span> ต้องเลือก รพ. หลัก</li>
+                    </ul>
+                </div>
+                <!-- บัตรทอง -->
+                <div class="bg-gray-50 rounded-lg p-5 border-l-4 border-green-500">
+                    <h4 class="text-xl font-bold text-green-800">3. บัตรทอง (UCS)</h4>
+                    <p class="text-sm text-gray-500">เริ่มปี 2545</p>
+                    <ul class="mt-3 list-disc list-inside text-gray-700 space-y-1">
+                        <li><span class="font-semibold">แหล่งเงิน:</span> ภาษี 100%</li>
+                        <li><span class="font-semibold">ผู้มีสิทธิ์:</span> คนไทยทุกคนที่ไม่มี 2 สิทธิ์แรก</li>
+                        <li><span class="font-semibold">การใช้สิทธิ์:</span> ต้องเลือกหน่วยบริการประจำ</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. วิวัฒนาการ -->
+        <div class="bg-white p-6 md:p-8 rounded-2xl shadow-xl mb-8 border-t-8 border-purple-500">
+            <h2 class="text-3xl font-bold text-purple-800 mb-6">2. วิวัฒนาการระบบ: จาก "สงเคราะห์" สู่ "สิทธิ"</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-red-50 p-5 rounded-lg border-2 border-red-200">
+                    <h3 class="text-2xl font-bold text-red-700 mb-3">ก่อนปี 2545 (ยุคสงเคราะห์)</h3>
+                    <ul class="list-none text-gray-700 space-y-2">
+                        <li class="flex items-start"><span class="mr-2 text-red-500">»</span> <span>กระทรวงสาธารณสุข (สธ.) คุมทุกอย่าง (คน, เงิน, แผน)</span></li>
+                        <li class="flex items-start"><span class="mr-2 text-red-500">»</span> <span>งบประมาณ รพ. "ไม่แน่นอน" (ขอ 15 ล้าน อาจได้ 10 ล้าน)</span></li>
+                        <li class="flex items-start"><span class="mr-2 text-red-500">»</span> <span>ประชาชน: จ่ายเงินสด หรือใช้บัตร "อนุเคราะห์" (อน.)</span></li>
+                    </ul>
+                </div>
+                <div class="bg-green-50 p-5 rounded-lg border-2 border-green-200">
+                    <h3 class="text-2xl font-bold text-green-700 mb-3">หลังปี 2545 (ยุคปฏิรูป)</h3>
+                    <ul class="list-none text-gray-700 space-y-2">
+                        <li class="flex items-start"><span class="mr-2 text-green-500">✔</span> <span>**ปฏิรูปการเงิน:** แยกบทบาทชัดเจน</span></li>
+                        <li class="flex items-start pl-5"><span class="mr-2">»</span> <span>**สธ. (Provider):** ดูแล "คน" และ "โครงสร้าง"</span></li>
+                        <li class="flex items-start pl-5"><span class="mr-2">»</span> <span>**กองทุน (Purchaser):** ดูแล "การเงิน" (สปสช., สปส.)</span></li>
+                        <li class="flex items-start"><span class="mr-2 text-green-500">✔</span> <span>เปลี่ยนจาก "การสงเคราะห์" เป็น "สิทธิ" (Rights) ขั้นพื้นฐาน</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- 3. วิธีการจ่ายเงิน (สปสช.) -->
+            <div class="bg-white p-6 md:p-8 rounded-2xl shadow-xl border-t-8 border-cyan-500">
+                <h2 class="text-3xl font-bold text-cyan-800 mb-6">3. วิธีการจ่ายเงิน (สปสช.)</h2>
+                <div class="space-y-5">
+                    <!-- OPD -->
+                    <div class="flex items-start">
+                        <svg class="w-12 h-12 text-cyan-500 mr-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.003c0 1.113.285 2.16.786 3.07M15 19.128c.331.029.661.049.991.065m-6.906-7.018c.331.029.661.049.991.065M4.5 4.5V12m0 0v8.25c0 .621.504 1.125 1.125 1.125h13.5c.621 0 1.125-.504 1.125-1.125V12m0 0V4.5m0 0H12m0 0h8.25c.621 0 1.125.504 1.125 1.125V12m0 0h-8.25m0 0V4.5m0 0H4.5m0 0v8.25c0 .621-.504 1.125-1.125 1.125H2.25C1.629 21 1.125 20.496 1.125 19.875V12m0 0V4.5m1.125 0h1.5m1.125 0h1.5m1.125 0h1.5m1.125 0h1.5" />
+                        </svg>
+                        <div>
+                            <h4 class="text-xl font-bold text-gray-800">ผู้ป่วยนอก (OPD) + สร้างเสริมสุขภาพ (P&P)</h4>
+                            <p class="text-lg font-semibold text-cyan-700">เหมาจ่ายรายหัว (Capitation)</p>
+                            <p class="text-gray-600">รพ. ได้เงินก้อนตามจำนวนคนลงทะเบียน (เช่น 1 แสนคน x 3,800 บาท) ได้รับเงินล่วงหน้า (Q1 = 50%) เพื่อบริหารจัดการเอง</p>
+                        </div>
+                    </div>
+                    <!-- IPD -->
+                    <div class="flex items-start">
+                        <svg class="w-12 h-12 text-cyan-500 mr-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <div>
+                            <h4 class="text-xl font-bold text-gray-800">ผู้ป่วยใน (IPD)</h4>
+                            <p class="text-lg font-semibold text-cyan-700">จ่ายตามผลงาน (DRG "แต้ม")</p>
+                            <p class="text-gray-600">รพ. ให้บริการก่อน -> ส่งข้อมูล -> สปสช. คำนวณ "แต้ม" (AdjRW) ตามความซับซ้อน -> จ่ายเงินตามแต้ม (มีรอบบิล 30 วัน)</p>
+                        </div>
+                    </div>
+                    <!-- Specific -->
+                    <div class="flex items-start">
+                        <svg class="w-12 h-12 text-cyan-500 mr-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h12A2.25 2.25 0 0 0 20.25 14.25V3m-16.5 0h16.5M3.75 3h16.5M3.75 3H3.75v1.5M17.25 3v1.5M3.75 16.5c0 1.242.009 2.47.026 3.696M17.25 16.5c0 1.242-.009 2.47-.026 3.696M3.75 20.25h13.5M10.5 16.5v3.75m3-3.75v3.75" />
+                        </svg>
+                        <div>
+                            <h4 class="text-xl font-bold text-gray-800">บริการเฉพาะ / ค่าใช้จ่ายสูง</h4>
+                            <p class="text-lg font-semibold text-cyan-700">จ่ายแยกรายการ (Fee Schedule)</p>
+                            <p class="text-gray-600">ดึงงบไว้กองกลาง (Central Reimbursement) เพื่อลดความเสี่ยงให้ รพ. (เช่น ล้างไต, ยามะเร็ง, อุปกรณ์เทียม)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. ความท้าทาย และ ทางออก -->
+            <div class="bg-white p-6 md:p-8 rounded-2xl shadow-xl border-t-8 border-red-500">
+                <h2 class="text-3xl font-bold text-red-800 mb-6">4. ความท้าทาย และ ทางออก</h2>
+                <div class="space-y-5">
+                    
+                    <!-- Global Budget Crisis -->
+                    <div class="bg-red-50 border-l-4 border-red-400 p-4 rounded-r-lg">
+                        <h4 class="text-xl font-bold text-red-700">วิกฤต "งบปลายปิด" (Global Budget Crisis)</h4>
+                        <p class="text-gray-700 mt-2">
+                            <span class="font-semibold">ปัญหา:</span> สปสช. "คาดการณ์" แต้ม IPD (เช่น 8.1 ล้านแต้ม) แต่ รพ. "ทำจริง" (เช่น 9.1 ล้านแต้ม) <br>
+                            <span class="font-semibold">ผลกระทบ:</span> งบก้อนเดิม ÷ ตัวหาร (แต้ม) ที่มากขึ้น = อัตราจ่ายจริง "ต่ำกว่า" ที่ประกาศ <br>
+                            <span class="font-semibold text-red-600">=> รพ. ขาดสภาพคล่อง และ สปสช. ต้อง Audit หนักขึ้น</span>
+                        </p>
+                    </div>
+
+                    <!-- Disparity -->
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg">
+                        <h4 class="text-xl font-bold text-yellow-700">ความเหลื่อมล้ำของงบประมาณ (Disparity)</h4>
+                        <p class="text-gray-700 mt-2">งบประมาณตั้งต้น (Per capita) ต่างกันมหาศาล <br>
+                            <span class="font-semibold text-gray-800">บัตรทอง:</span> ~ 4,200 บาท/หัว <br>
+                            <span class="font-semibold text-gray-800">ข้าราชการ:</span> ~ 17,000 บาท/หัว (สูงกว่า 4 เท่า)
+                        </p>
+                    </div>
+
+                    <!-- Sustainability -->
+                    <div class="bg-green-50 border-l-4 border-green-400 p-4 rounded-r-lg">
+                        <h4 class="text-xl font-bold text-green-700">ความยั่งยืน และ ทางออก (Solution)</h4>
+                        <p class="text-gray-700 mt-2">
+                            <span class="font-semibold">ความท้าทาย:</span> งบสุขภาพโต (ปี 69 โต 12.5%) เร็วกว่า GDP ประเทศ (โต 1.6%) + ภาระโรค NCDs (เบาหวาน, ไต) พุ่งสูง <br>
+                            <span class="font-semibold text-green-800">ทางออกที่ยั่งยืน:</span> ไม่ใช่การหาเงินมา "รักษา" (Cure) เพิ่ม แต่คือการลงทุนใน **"การสร้างเสริมสุขภาพและป้องกันโรค" (P&P)** เพื่อลดจำนวนคนป่วย
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center text-gray-500 mt-12 text-sm">
+            ออกแบบโดยเภสัชกรวิรุณ เวชศิริ
+        </footer>
+    </div>
+
+</body>
+</html>

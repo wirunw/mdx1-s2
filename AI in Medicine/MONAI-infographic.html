@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MONAI: ระบบนิเวศโอเพ่นซอร์สสำหรับ AI ทางการแพทย์</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- 
+    สรุปโครงร่างภายใน (Internal Plan Summary):
+    Narrative: เกริ่น MONAI อธิบายระบบนิเวศแบบครบวงจร (Label, Core, Bundle, Deploy) เจาะลึก Core และ Label อธิบายเส้นทางจากวิจัยสู่คลินิกด้วย Deploy และปิดท้ายด้วยวิสัยทัศน์ Multimodal/Agentic AI
+    Structure: Single-page scrollable SPA ใช้ Tailwind CSS grid (md:grid-cols-2)
+    Color Palette: 'Brilliant Blues' (#003F63, #006094, #0088C8, #39A7D8, #89D1F3, #D0EDFB)
+
+    Visualization Choices:
+    1. Ecosystem Flow: เป้าหมาย จัดโครงสร้าง เลือก HTML/Tailwind Flowchart เหมาะกับการแสดงความสัมพันธ์ขององค์ประกอบ
+    2. Core Components: เป้าหมาย เปรียบเทียบ เลือก Donut Chart ด้วย Chart.js
+    3. Label Efficiency: เป้าหมาย เปรียบเทียบ เลือก Bar Chart ด้วย Chart.js
+    4. Deploy Process: เป้าหมาย จัดลำดับ เลือก HTML/Tailwind Flowchart
+    5. Multimodal Inputs: เป้าหมาย จัดหมวด เลือก HTML/Tailwind Diagram
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F0F9FF; 
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .flow-box {
+            background-color: white;
+            border: 2px solid #006094;
+            color: #003F63;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            flex: 1;
+            min-width: 150px;
+        }
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #006094;
+            margin: 0 0.5rem;
+            transform: translateY(0);
+        }
+        @media (max-width: 767px) {
+            .flow-arrow {
+                transform: rotate(90deg);
+                margin: 0.5rem 0;
+            }
+        }
+        .stat-card {
+            background-color: #D0EDFB;
+            color: #003F63;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'monai-dark-blue': '#003F63',
+                        'monai-mid-blue': '#006094',
+                        'monai-blue': '#0088C8',
+                        'monai-light-blue': '#39A7D8',
+                        'monai-pale-blue': '#89D1F3',
+                        'monai-bg-blue': '#D0EDFB',
+                        'monai-bg-light': '#F0F9FF',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-monai-bg-light text-monai-dark-blue">
+
+    <div class="container mx-auto p-4 md:p-8">
+        
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-monai-dark-blue mb-2">MONAI</h1>
+            <p class="text-2xl md:text-3xl text-monai-mid-blue font-light">ระบบนิเวศโอเพ่นซอร์สสำหรับ AI ทางการแพทย์</p>
+        </header>
+
+        <main class="space-y-12">
+
+            <section class="bg-white rounded-lg shadow-lg p-6 md:p-8 text-center">
+                <h2 class="text-3xl font-bold text-monai-dark-blue mb-4">MONAI คืออะไร?</h2>
+                <p class="text-lg text-monai-mid-blue max-w-4xl mx-auto mb-8">
+                    <strong>MONAI (Medical Open Network for AI)</strong> คือเฟรมเวิร์กโอเพ่นซอร์สบน <strong>PyTorch</strong> ที่ร่วมพัฒนาโดย <strong>NVIDIA</strong> และ <strong>King's College London</strong> ออกแบบมาเพื่อเร่งรัดวงจรการพัฒนา AI ทางการแพทย์ตั้งแต่งานวิจัยไปจนถึงการใช้งานในคลินิก โดยมีเครื่องมือเฉพาะทางสำหรับจัดการข้อมูลสุขภาพที่ซับซ้อน เช่น ภาพจาก CT, MRI และภาพพยาธิวิทยา (Pathology).
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    <div class="stat-card">
+                        <span class="text-4xl font-bold block">1.5M+</span>
+                        <span class="text-lg">ยอดดาวน์โหลดทั้งหมด</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="text-4xl font-bold block">75%</span>
+                        <span class="text-lg">ลดเวลาในการทำ Annotation</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="text-4xl font-bold block">300+</span>
+                        <span class="text-lg">ผู้ร่วมพัฒนาทั่วโลก</span>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-monai-dark-blue mb-4 text-center">ระบบนิเวศ MONAI แบบครบวงจร</h2>
+                <p class="text-lg text-monai-mid-blue max-w-4xl mx-auto mb-8 text-center">
+                    MONAI เป็นชุดเครื่องมือที่ครอบคลุมทุกขั้นตอนของเวิร์กโฟลว์ AI ทางการแพทย์ เพื่อความสามารถในการทำซ้ำ (reproducibility) และเร่งเส้นทางสู่อิมแพกต์ทางคลินิก
+                </p>
+                <div class="flex flex-col md:flex-row items-stretch justify-between gap-4 p-4">
+                    <div class="flow-box">
+                        <span class="text-2xl block mb-2">①</span>
+                        <strong>MONAI Label</strong>
+                        <p class="font-normal text-sm">การระบุข้อมูลด้วย AI (AI-Assisted Annotation)</p>
+                    </div>
+                    <div class="flow-arrow">&rarr;</div>
+                    <div class="flow-box">
+                        <span class="text-2xl block mb-2">②</span>
+                        <strong>MONAI Core</strong>
+                        <p class="font-normal text-sm">การพัฒนาโมเดล (วิจัยและพัฒนา)</p>
+                    </div>
+                    <div class="flow-arrow">&rarr;</div>
+                    <div class="flow-box">
+                        <span class="text-2xl block mb-2">③</span>
+                        <strong>MONAI Bundle</strong>
+                        <p class="font-normal text-sm">แพ็กเกจโมเดลแบบทำซ้ำได้</p>
+                    </div>
+                    <div class="flow-arrow">&rarr;</div>
+                    <div class="flow-box">
+                        <span class="text-2xl block mb-2">④</span>
+                        <strong>MONAI Deploy</strong>
+                        <p class="font-normal text-sm">การบูรณาการในคลินิก (MAPs)</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <section class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-bold text-monai-dark-blue mb-4">เจาะลึก: MONAI Core</h2>
+                    <p class="text-lg text-monai-mid-blue mb-6">
+                        ไลบรารี PyTorch ที่เป็นหัวใจของ MONAI รวมเครื่องมือเฉพาะทางสำหรับงานวิจัยและพัฒนา ได้แก่ ทรานส์ฟอร์มข้อมูลเฉพาะโดเมน เครือข่ายสำเร็จรูป ฟังก์ชันสูญเสียสำหรับการแพทย์ และเวิร์กโฟลว์ที่ปรับให้เหมาะกับข้อมูล 2D, 3D และ 4D
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="monaiCoreChart"></canvas>
+                    </div>
+                    <p class="text-md text-monai-mid-blue mt-4 text-center">
+                        เครื่องมือนี้รองรับงานซับซ้อน อาทิ 3D patch-based sampling, การเพิ่มข้อมูลแบบซิงก์ระหว่างภาพ/ป้ายกำกับ และการอนุมานแบบ sliding-window ที่มีประสิทธิภาพ
+                    </p>
+                </section>
+
+                <section class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-bold text-monai-dark-blue mb-4">การระบุข้อมูลอัจฉริยะ: MONAI Label</h2>
+                    <p class="text-lg text-monai-mid-blue mb-6">
+                        เครื่องมือเซิร์ฟเวอร์–ไคลเอนต์ที่ใช้ AI ช่วยเร่งการทำฉลากข้อมูลภาพผ่านเวิร์กโฟลว์ “active learning” (เช่น DeepEdit, DeepGrow) เพื่อลดภาระงานของผู้เชี่ยวชาญ
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="monaiLabelChart"></canvas>
+                    </div>
+                    <p class="text-md text-monai-mid-blue mt-4 text-center">
+                        เมื่อเชื่อมต่อกับโปรแกรมดูภาพอย่าง 3D Slicer และ OHIF สามารถลดเวลาและต้นทุนการทำ Annotation ได้มากถึง 75% เมื่อเทียบกับการทำแบบแมนนวล
+                    </p>
+                </section>
+            </div>
+
+            <section class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-monai-dark-blue mb-4 text-center">จากวิจัยสู่คลินิก: MONAI Deploy</h2>
+                <p class="text-lg text-monai-mid-blue max-w-4xl mx-auto mb-8 text-center">
+                    คอขวดสำคัญของ AI ทางการแพทย์คือการบูรณาการสู่สภาพแวดล้อมจริง MONAI Deploy แก้โจทย์นี้ด้วยการแพ็กโมเดลที่ฝึกแล้วเป็นบริการมาตรฐานที่เรียกว่า MONAI Application Packages (MAPs)
+                </p>
+                <div class="flex flex-col md:flex-row items-stretch justify-between gap-4 p-4 bg-monai-bg-light rounded-lg">
+                    <div class="flow-box">
+                        <strong>โมเดลวิจัย</strong>
+                        <p class="font-normal text-sm">(เช่น model.pth)</p>
+                    </div>
+                    <div class="flow-arrow">&rarr;</div>
+                    <div class="flow-box">
+                        <strong>MONAI Deploy SDK</strong>
+                        <p class="font-normal text-sm">กำหนดเวิร์กโฟลว์ & แพ็กเกจ</p>
+                    </div>
+                    <div class="flow-arrow">&rarr;</div>
+                    <div class="flow-box">
+                        <strong>MAP (Docker Image)</strong>
+                        <p class="font-normal text-sm">แอปพลิเคชันมาตรฐาน</p>
+                    </div>
+                    <div class="flow-arrow">&rarr;</div>
+                    <div class="flow-box">
+                        <strong>สภาพแวดล้อมคลินิก</strong>
+                        <p class="font-normal text-sm">เชื่อมต่อ PACS ผ่าน DICOM</p>
+                    </div>
+                </div>
+                <p class="text-md text-monai-mid-blue mt-6 text-center max-w-3xl mx-auto">
+                    กระบวนการนี้ทำให้สคริปต์ Python กลายเป็นบริการที่แข็งแรงและเชื่อมต่อระบบโรงพยาบาลได้จริง ช่วยปิดช่องว่างระหว่างงานวิจัยและการใช้งานจริง
+                </p>
+            </section>
+            
+            <section class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-monai-dark-blue mb-4 text-center">ก้าวต่อไป: MONAI Multimodal</h2>
+                <p class="text-lg text-monai-mid-blue max-w-4xl mx-auto mb-8 text-center">
+                    แนวหน้าใหม่คือการผสานข้อมูลหลากหลายรูปแบบ MONAI เปิดกรอบคิดเชิงเอเจนต์ (Agentic AI) เพื่อให้ AI เหตุผลครอบคลุมทั้งภาพ ข้อความ วิดีโอ และพยาธิวิทยา สู่การวิเคราะห์ที่ครบองค์รวม
+                </p>
+                <div class="flex flex-wrap items-stretch justify-center gap-4 p-4">
+                    <div class="flow-box !bg-monai-dark-blue !text-white !border-monai-light-blue md:w-1/4">
+                        <strong>MONAI Agentic AI</strong>
+                    </div>
+                    <div class="w-full md:w-3/5 flex flex-wrap gap-4 justify-center">
+                        <div class="flow-box !bg-monai-bg-blue !border-monai-blue">ภาพ (CT, MRI)</div>
+                        <div class="flow-box !bg-monai-bg-blue !border-monai-blue">ข้อความ (EHRs)</div>
+                        <div class="flow-box !bg-monai-bg-blue !border-monai-blue">วิดีโอ (ศัลยกรรม)</div>
+                        <div class="flow-box !bg-monai-bg-blue !border-monai-blue">พยาธิวิทยา (WSI)</div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const brilliantBlues = ['#003F63', '#006094', '#0088C8', '#39A7D8', '#89D1F3'];
+            const tooltipTitleCallback = {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                } else {
+                                  return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            if (document.getElementById('monaiCoreChart')) {
+                const ctxCore = document.getElementById('monaiCoreChart').getContext('2d');
+                new Chart(ctxCore, {
+                    type: 'doughnut',
+                    data: {
+                        labels: [
+                            'ทรานส์ฟอร์มเฉพาะโดเมน', 
+                            'เครือข่ายสำเร็จรูป (เช่น UNet)', 
+                            'ฟังก์ชัน Loss ทางการแพทย์ (Dice)', 
+                            'เวิร์กโฟลว์ที่ปรับแต่ง'
+                        ],
+                        datasets: [{
+                            label: 'องค์ประกอบของ MONAI Core',
+                            data: [40, 30, 15, 15],
+                            backgroundColor: brilliantBlues,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            ...tooltipTitleCallback.plugins,
+                            legend: { position: 'bottom' },
+                            title: {
+                                display: true,
+                                text: 'องค์ประกอบหลักของ MONAI Core',
+                                font: { size: 16 },
+                                color: '#003F63',
+                                padding: { bottom: 20 }
+                            }
+                        }
+                    }
+                });
+            }
+
+            if (document.getElementById('monaiLabelChart')) {
+                const ctxLabel = document.getElementById('monaiLabelChart').getContext('2d');
+                new Chart(ctxLabel, {
+                    type: 'bar',
+                    data: {
+                        labels: [
+                            'การทำฉลากแบบแมนนวล', 
+                            ['MONAI Label', '(Active Learning)']
+                        ],
+                        datasets: [{
+                            label: 'เวลา/ต้นทุนสัมพัทธ์',
+                            data: [100, 25],
+                            backgroundColor: [brilliantBlues[1], brilliantBlues[3]],
+                            borderColor: [brilliantBlues[0], brilliantBlues[2]],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'เวลา / ต้นทุน (%)'
+                                }
+                            }
+                        },
+                        plugins: {
+                            ...tooltipTitleCallback.plugins,
+                            legend: { display: false },
+                            title: {
+                                display: true,
+                                text: 'ประสิทธิภาพการทำ Annotation',
+                                font: { size: 16 },
+                                color: '#003F63',
+                                padding: { bottom: 20 }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

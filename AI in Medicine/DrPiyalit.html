@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI พลิกวงการแพทย์: โอกาสและความท้าทาย</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Color Palette */
+            --primary-blue: #0066cc;
+            --primary-dark: #004494;
+            --primary-light: #4d94ff;
+            --accent-teal: #00b8a9;
+            --accent-gold: #f8b739;
+            --dark-bg: #0a1929;
+            --dark-card: #132f4c;
+            --text-primary: #ffffff;
+            --text-secondary: #b0bec5;
+            --text-dark: #1a1a1a;
+            
+            /* Spacing */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+            --shadow-glow: 0 0 32px rgba(0, 102, 204, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Sarabun', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.8;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #fff;
+            box-shadow: var(--shadow-lg);
+            border-radius: var(--radius-lg);
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--primary-blue);
+            padding-bottom: 20px;
+            position: relative;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-teal), var(--accent-gold));
+            border-radius: 2px;
+        }
+        
+        h1 {
+            color: var(--primary-blue);
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-top: 10px;
+        }
+        
+        .author {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-top: 15px;
+        }
+        
+        .introduction {
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.05) 0%, rgba(0, 184, 169, 0.05) 100%);
+            padding: 20px;
+            border-left: 4px solid var(--primary-blue);
+            margin-bottom: 30px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .introduction p {
+            margin: 10px 0;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        h2 {
+            color: var(--primary-blue);
+            font-size: 22px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        h3 {
+            color: var(--primary-dark);
+            font-size: 18px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+            font-size: 15px;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+        
+        .highlight {
+            background-color: rgba(248, 183, 57, 0.2);
+            padding: 2px 6px;
+            border-radius: var(--radius-sm);
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+        
+        .quote {
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.1) 0%, rgba(0, 184, 169, 0.1) 100%);
+            border-left: 4px solid var(--primary-blue);
+            padding: 15px;
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--primary-dark);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .section-box {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--primary-light);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .key-point {
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.08) 0%, rgba(0, 184, 169, 0.08) 100%);
+            border-left: 4px solid var(--accent-teal);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .key-point strong {
+            color: var(--primary-dark);
+        }
+        
+        .challenge-box {
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.08) 0%, rgba(255, 152, 0, 0.08) 100%);
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .challenge-box strong {
+            color: #c62828;
+        }
+        
+        .opportunity-box {
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.08) 0%, rgba(76, 175, 80, 0.08) 100%);
+            border-left: 4px solid var(--primary-blue);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .opportunity-box strong {
+            color: var(--primary-dark);
+        }
+        
+        .use-case-box {
+            background: linear-gradient(135deg, rgba(248, 183, 57, 0.08) 0%, rgba(0, 102, 204, 0.08) 100%);
+            border-left: 4px solid var(--accent-gold);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .use-case-box strong {
+            color: #f57f17;
+        }
+        
+        .tech-box {
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.08) 0%, rgba(0, 102, 204, 0.08) 100%);
+            border-left: 4px solid #7b1fa2;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .tech-box strong {
+            color: #4a148c;
+        }
+        
+        .stat-highlight {
+            background-color: var(--accent-gold);
+            padding: 5px 8px;
+            border-radius: var(--radius-sm);
+            font-weight: bold;
+            color: white;
+        }
+        
+        .section-number {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 18px;
+            box-shadow: var(--shadow-md);
+        }
+        
+        footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid var(--primary-light);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .divider {
+            margin: 30px 0;
+            border: none;
+            border-top: 2px solid var(--primary-light);
+            border-radius: 1px;
+        }
+        
+        a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--accent-teal);
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            h2 {
+                font-size: 18px;
+            }
+            
+            h3 {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI พลิกวงการแพทย์: โอกาสและความท้าทาย</h1>
+            <p class="subtitle">ที่แพทย์ไทยต้องรู้</p>
+
+            <p class="author"><strong>โดย:</strong> นพ.ปิยะฤทธิ์ อิทธิชัยวงศ์</p>
+            <p class="author"><strong>เรียบเรียงโดย:</strong> เภสัชกรวิรุณ เวชศิริ</p>
+        </header>
+        
+        <div class="introduction">
+            <h3 style="margin-top: 0; color: #333; border: none; padding-bottom: 0;">บทนำ: เมื่อ AI เก่งกว่าที่เคยเป็น</h3>
+            <p>ในยุคที่ AI พัฒนาอย่างก้าวกระโดด Large Language Models (LLMs) ได้แสดงศักยภาพที่น่าทึ่งจนวงการแพทย์ต้องหันมาจับตามอง</p>
+        </div>
+        
+        <h2>ศักยภาพ AI ที่น่าสนใจ</h2>
+        
+        <p>นพ.ปิยะฤทธิ์ ได้ฉายภาพความสามารถของ AI ในปัจจุบันว่า:</p>
+        
+        <div class="opportunity-box">
+            <p><strong>โมเดล GPT-4O:</strong> ทำคะแนนสอบใบประกอบวิชาชีพแพทย์ของสหรัฐฯ (USMLE) ได้สูงถึง <span class="stat-highlight">86% (99.8 percentile)</span></p>
+        </div>
+        
+        <div class="opportunity-box">
+            <p><strong>โมเดลรุ่นใหม่ (Reasoning):</strong> ใช้เทคนิค "Reasoning" (การให้เหตุผล) สามารถทำคะแนนได้ถึง <span class="stat-highlight">96% (99.95 percentile)</span></p>
+        </div>
+        
+        <p>ซึ่งหมายความว่า AI เหล่านี้มีความรู้ทางการแพทย์ที่กว้างขวางและลึกซึ้งในระดับที่เหนือกว่าผู้สอบส่วนใหญ่</p>
+        
+        <div class="key-point">
+            <strong>ข้อสังเกต:</strong> นี่จึงไม่ใช่ภาพฝันในอนาคตอีกต่อไป แต่เป็นเครื่องมือที่ "มาถึงแล้ว" และกำลังสร้างแรงสั่นสะเทือนต่อวงการแพทย์ได้จริงแล้ว
+        </div>
+        
+        <p><strong>คำถาม:</strong> จึงไม่ใช่แค่ "AI ทำอะไรได้บ้าง?" แต่เป็น "ในเมื่อ AI เก่งขนาดนี้ เราในฐานะบุคลากรทางการแพทย์ จะรับมือและใช้ประโยชน์จากมันอย่างไร?"</p>
+        
+        <hr class="divider">
+        
+        <!-- ส่วนที่ 1 -->
+        <h2><span class="section-number">1</span> ความท้าทาย: เมื่อคนไข้ถือ AI มาพบแพทย์</h2>
+        
+        <p>การบรรยายได้ฉายภาพความท้าทายหลัก 3 ประการที่วงการแพทย์กำลังเผชิญ:</p>
+        
+        <div class="challenge-box">
+            <h3>ความสัมพันธ์ที่เปลี่ยนไป</h3>
+            <p>เกิดสถานการณ์ที่คนไข้เริ่มใช้ AI ที่เก่งมาก (เช่น GPT-5 Pro) มาตรวจสอบหรือท้าทายการวินิจฉัยของแพทย์</p>
+            <p>นพ.ปิยะฤทธิ์ เน้นย้ำว่าแพทย์ไม่สามารถปัดตกข้อมูลจาก AI เหล่านั้นได้อีกต่อไป ไม่ใช่เพราะคนไข้เชื่อ AI แต่เพราะ AI เหล่านั้นเข้าถึงองค์ความรู้มหาศาลและอาจ "ถูกต้อง" ในบางประเด็นที่ซับซ้อน</p>
+            <p>ซึ่งสถานการณ์เช่นนี้เริ่มนำไปสู่คดีความในต่างประเทศ เมื่อมีการโต้แย้งทางการรักษาโดยใช้ข้อมูลจาก AI อ้างอิง</p>
+        </div>
+        
+        <div class="challenge-box">
+            <h3>ภาระงานเอกสาร</h3>
+            <p>บุคลากรทางการแพทย์ยังคง "จม" อยู่กับงานเอกสารและการบันทึกข้อมูล (Medical Record)</p>
+            <p>ภาระงานส่วนนี้ไม่เพียงแต่กินเวลาที่ควรจะได้ใช้ดูแลคนไข้โดยตรง แต่ยังลดเวลาที่แพทย์จะได้สบตา พูดคุย หรือสร้างความสัมพันธ์ที่ดีกับคนไข้</p>
+            <p>นำไปสู่ความเหนื่อยล้า (burnout) และลดคุณภาพของการบริการ</p>
+        </div>
+        
+        <div class="challenge-box">
+            <h3>ต้นทุนการนำเข้าเทคโนโลยี</h3>
+            <p>การซื้อโซลูชัน AI หรือการใช้ API จากต่างประเทศมีราคาสูงมาก เช่น โมเดลวิเคราะห์ภาพทางการแพทย์ อาจมีค่าใช้จ่าย <span class="stat-highlight">2-3 ดอลลาร์ (70-100 บาท)</span> ต่อการใช้งานหนึ่งครั้ง</p>
+            <p>ซึ่งเป็นอุปสรรคสำคัญที่สร้างความเหลื่อมล้ำในการเข้าถึงเทคโนโลยี โดยเฉพาะโรงพยาบาลภาครัฐที่มีงบประมาณจำกัด ทำให้การนำนวัตกรรมมาใช้เป็นไปได้ยาก</p>
+        </div>
+        
+        <hr class="divider">
+        
+        <!-- ส่วนที่ 2 -->
+        <h2><span class="section-number">2</span> คำตอบ: "สร้างเอง" (We can build it)</h2>
+        
+        <p>ท่ามกลางความท้าทายนี้ คำตอบที่ชัดเจนและหนักแน่นจากการบรรยายคือ:</p>
+        
+        <div class="quote">
+            "เราสามารถสร้างเองได้ และทำได้ดีกว่า ในบริบทของไทย"
+        </div>
+        
+        <p>นพ.ปิยะฤทธิ์ ไม่ได้พูดเพื่อปลุกใจ แต่ได้แสดงหลักฐานเชิงประจักษ์ว่าทีมแพทย์และวิศวกรไทยมีความสามารถระดับโลก:</p>
+        
+        <div class="opportunity-box">
+            <h3>ผลงานระดับโลก</h3>
+            <ul>
+                <li><strong>การแข่งขัน AI ด้านภาษา (ACL):</strong> "ทีมไทยล้วน" สามารถคว้าอันดับ <span class="stat-highlight">4 ของโลก</span></li>
+                <li><strong>การวิเคราะห์ข้อมูลยารักษามะเร็ง:</strong> ทีมไทยที่เข้าแข่งขัน MIT/Harvard ก็ติดอันดับ <span class="stat-highlight">3 ของโลก</span></li>
+            </ul>
+            <p>แสดงให้เห็นว่าบุคลากรของเรามีศักยภาพในการต่อสู้บนเวทีโลก</p>
+        </div>
+        
+        <div class="opportunity-box">
+            <h3>ต้นทุนที่เหนือกว่า: จุดเปลี่ยนสำคัญ</h3>
+            <p>นพ.ปิยะฤทธิ์ เปิดเผยต้นทุนการพัฒนาโมเดลวิเคราะห์ภาพ (Segmentation Model) ในไทยว่า:</p>
+            <div class="quote">
+                "ต้นทุนจริง... ไม่ถึง 1 บาท หรืออาจแค่ 10 สตางค์"
+            </div>
+            <p>เทียบกับที่ต่างประเทศขายในราคา <span class="stat-highlight">70 บาท</span></p>
+            <p>ส่วนต่างมหาศาลนี้คือ <strong>"โอกาส"</strong> ที่จะทำให้เทคโนโลยีทางการแพทย์ที่ล้ำสมัยเป็นสิ่งที่เข้าถึงได้ (Accessible) สำหรับคนไทยทุกคน และสร้างความมั่นคงทางเทคโนโลยีสาธารณสุขในระยะยาว</p>
+        </div>
+        
+        <hr class="divider">
+        
+        <!-- ส่วนที่ 3 -->
+        <h2><span class="section-number">3</span> ตัวอย่างการใช้งานจริงในไทย (Use Cases)</h2>
+        
+        <p>ศักยภาพของคนไทยได้ถูกนำมาต่อยอดเป็น Use Case ที่ใช้งานได้จริงแล้ว และกำลังสร้างผลกระทบในวงกว้าง:</p>
+        
+        <div class="use-case-box">
+            <h3>AI ช่วยถอดเสียง (AI Scribe)</h3>
+            <p><strong>ใช้งานจริงในเครือ BDMS</strong></p>
+            <p>นี่คือ AI ที่ฟังการสนทนาระหว่างแพทย์กับคนไข้ แล้วถอดเสียง สรุปอาการ และยิงข้อมูลเข้าสู่ Medical Record อัตโนมัติ</p>
+            <p><strong>ประโยชน์:</strong> ไม่ใช่แค่ความเร็ว แต่คือการที่แพทย์ "ไม่ต้องวางมือบนคีย์บอร์ด" สามารถสบตาและมีปฏิสัมพันธ์กับคนไข้ได้อย่างเต็มที่</p>
+            <p>คืน "ความเป็นมนุษย์" กลับสู่ห้องตรวจ</p>
+        </div>
+        
+        <div class="use-case-box">
+            <h3>การลดต้นทุน</h3>
+            <p>จากเดิมที่ต้นทุนการใช้เทคโนโลยีนี้สูงถึง <span class="stat-highlight">4 ดอลลาร์ (ราว 140 บาท)</span> ต่อการคุย 15 นาที</p>
+            <p>ปัจจุบันทีมไทยสามารถลดต้นทุนลงมา <span class="stat-highlight">"ต่ำกว่า 10 บาท"</span> ได้สำเร็จ</p>
+            <p>ซึ่งเป็นราคาที่เปิดโอกาสให้โรงพยาบาลรัฐสามารถเข้าถึงได้ในอนาคต</p>
+        </div>
+        
+        <div class="use-case-box">
+            <h3>แอป KinDee</h3>
+            <p>แอปพลิเคชันนับแคลอรีจากภาพถ่ายอาหาร ที่พัฒนาโดยคนไทยทั้งหมด</p>
+            <p><strong>สถิติการใช้งาน:</strong></p>
+            <ul>
+                <li>จำนวนผู้ใช้: <span class="stat-highlight">3,000,000 Users</span></li>
+                <li>การใช้งาน: <span class="stat-highlight">"10 กว่าล้านครั้ง"</span></li>
+            </ul>
+            <p>ตัวเลขนี้ไม่เพียงแต่แสดงถึงความสำเร็จของแอป แต่ยังชี้ให้เห็นถึง <strong>"คลังข้อมูล (Data)"</strong> มหาศาลเกี่ยวกับพฤติกรรมการกินของคนไทย ซึ่งสามารถนำไปต่อยอดงานวิจัยและบริการด้านสุขภาพได้อีกมาก</p>
+        </div>
+        
+        <hr class="divider">
+        
+        <!-- ส่วนที่ 4 -->
+        <h2><span class="section-number">4</span> เจาะลึกเทคโนโลยี: ทำไม AI ถึงเก่งขึ้น?</h2>
+        
+        <div class="tech-box">
+            <h3>Reasoning Model</h3>
+            <p>AI ยุคใหม่ไม่ได้แค่ "จำ" แล้ว "ตอบ" (แบบท่องจำ) แต่ "คิด" เป็น หรือที่เรียกว่า <strong>"Reasoning Model"</strong></p>
+            <p><strong>เปรียบเทียบ:</strong> เหมือนการที่แพทย์ต้อง "รำ" หรือไล่เรียง Differential Diagnosis ก่อนจะสรุปโรค</p>
+            <p>AI ก็ใช้เวลาทบทวน คิดหาเหตุผลก่อนตอบ ทำให้คำตอบแม่นยำและมีตรรกะมากขึ้น</p>
+        </div>
+        
+        <div class="tech-box">
+            <h3>การแก้ปัญหา Hallucination</h3>
+            <p>การ "หลอน" หรือการให้ข้อมูลมั่ว (Hallucination) <strong>"จะไม่มีวันหายไป"</strong> เพราะเป็นธรรมชาติของโมเดล</p>
+            <p>แต่ AI รุ่นใหม่ (เช่น GPT-5 Thinking) ถูกเทรนให้ <span class="highlight">"ฉลาดที่จะเงียบ"</span> (be smart and silent)</p>
+            <p>คือเมื่อไม่มั่นใจ AI จะเริ่มตอบว่า <strong>"ไม่มั่นใจ"</strong></p>
+            <p>นี่คือคุณสมบัติที่สำคัญอย่างยิ่งในทางการแพทย์ ที่ซึ่งความปลอดภัยของผู้ป่วย (Patient Safety) ต้องมาก่อนความมั่นใจที่ผิดพลาด</p>
+        </div>
+        
+        <div class="tech-box">
+            <h3>H-Bench Benchmark</h3>
+            <p>การทดสอบ H-Bench (โดย Stanford/Harvard) ที่จำลองการคุยกับคนไข้จริงๆ (ซึ่งอาจให้ข้อมูลสับสนหรือผิดๆ ถูกๆ)</p>
+            <p><strong>ผลปรากฏ:</strong></p>
+            <ul>
+                <li>GPT-5 Thinking: <span class="stat-highlight">67.2%</span></li>
+                <li>แพทย์ GP (General Practitioner) ทั่วไป: <span class="stat-highlight">50%</span></li>
+            </ul>
+            <p>นี่ไม่ได้แปลว่า AI เก่งกว่าแพทย์ทุกคน แต่เป็นหลักฐานเชิงสถิติว่า AI เริ่มทำได้ดีกว่าค่าเฉลี่ยของมนุษย์ในงานวิเคราะห์บางอย่าง และเป็นเครื่องมือช่วยคัดกรองหรือให้ความเห็นที่สองที่ทรงพลังมาก</p>
+        </div>
+        
+        <div class="tech-box">
+            <h3>โจทย์ภาษาไทย (Code-switching)</h3>
+            <p><strong>ความท้าทายที่เป็นเอกลักษณ์ของไทย:</strong> การที่คนไข้และแพทย์พูด "ไทยคำอังกฤษคำ"</p>
+            <p>ตัวอย่าง: "ปวดท้อง ไฮเปอร์" หรือ "มีไข้ low grade"</p>
+            <p>เป็นบริบทที่ AI จากต่างชาติมักจะ "หลอน" หรือตีความผิดได้ง่าย</p>
+            <p><strong>โอกาส:</strong> นี่คือช่องว่างสำคัญที่ AI ที่พัฒนาโดยคนไทยและเข้าใจบริบทนี้โดยเฉพาะ จะเข้ามาตอบโจทย์ได้ดีกว่าอย่างชัดเจน</p>
+        </div>
+        
+        <hr class="divider">
+        
+        <!-- บทสรุป -->
+        <h2>สรุป: AI คือ "ผู้ช่วย" และแพทย์คือ "ผู้อธิบาย"</h2>
+        
+        <p>หัวใจสำคัญของการปรับตัวในยุค AI คือการมอง AI เป็น <strong>"ผู้ช่วย" (Assistant)</strong> ที่ทรงพลัง ไม่ใช่ <strong>"ผู้ทดแทน" (Replacement)</strong></p>
+        
+        <div class="key-point">
+            <strong>กลยุทธ์สำคัญ:</strong> "Human in the Loop" หรือ "แพทย์เป็นผู้ยืนยัน" ในขั้นตอนสุดท้ายเสมอ เพราะ AI ยังขาดวิจารณญาณ (Judgment) และความเข้าใจในบริบทเชิงลึกของคนไข้แต่ละคน
+        </div>
+        
+        <h3>บทบาทแพทย์ในอนาคต</h3>
+        
+        <p>บทบาทของแพทย์ในอนาคตอันใกล้นี้ จะไม่ได้เป็นเพียง <strong>"ผู้วินิจฉัย"</strong> (Diagnostician) แต่ต้องพัฒนาทักษะการเป็น <strong>"ผู้อธิบาย"</strong> (Explainer) ที่เก่งกาจ</p>
+        
+        <div class="section-box">
+            <h4>ภารกิจหลักของแพทย์ในยุค AI:</h4>
+            <ul>
+                <li>สามารถอธิบายข้อมูลที่ซับซ้อนจาก AI ให้คนไข้เข้าใจ</li>
+                <li>สร้างความไว้วางใจกับผู้ป่วย</li>
+                <li>ทำงานร่วมกับ AI เพื่อวางแผนการรักษาที่ดีที่สุดและเหมาะสมที่สุดสำหรับผู้ป่วยแต่ละราย</li>
+            </ul>
+        </div>
+        
+        <footer>
+            <p>เอกสารนี้สร้างจาก บันทึกการเรียนรู้จากการบรรยายของ นพ.ปิยะฤทธิ์ อิทธิชัยวงศ์</p>
+            <p>สรุปและขยายความโดย: เภสัชกรวิรุณ เวชศิริ</p>
+            
+            <p>© 2025</p>
+        </footer>
+    </div>
+</body>
+</html>

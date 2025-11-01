@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apollo Executive Dashboard - Med Talk</title>
+    <!-- โหลด Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- ไอคอน (Heroicons) -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <style>
+        /* ใช้ฟอนต์ Sarabun */
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap');
+        * {
+            font-family: 'Sarabun', sans-serif;
+            transition: all 0.3s ease;
+        }
+        body {
+            background: linear-gradient(135deg, #0a1929 0%, #1a2f4a 100%);
+            min-height: 100vh;
+        }
+        .dashboard-header {
+            background: linear-gradient(135deg, #0066cc 0%, #00b8a9 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 102, 204, 0.2);
+        }
+        .dashboard-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .dashboard-header .status {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #22c55e;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .kpi-card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-left: 4px solid;
+        }
+        .kpi-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        .kpi-card.primary {
+            border-left-color: #0066cc;
+        }
+        .kpi-card.success {
+            border-left-color: #00b8a9;
+        }
+        .kpi-card.warning {
+            border-left-color: #f8b739;
+        }
+        .kpi-card.danger {
+            border-left-color: #ff6b6b;
+        }
+        .kpi-title {
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .kpi-title ion-icon {
+            font-size: 1.25rem;
+            margin-right: 0.75rem;
+            color: #0066cc;
+        }
+        .kpi-card.success .kpi-title ion-icon {
+            color: #00b8a9;
+        }
+        .kpi-card.warning .kpi-title ion-icon {
+            color: #f8b739;
+        }
+        .kpi-card.danger .kpi-title ion-icon {
+            color: #ff6b6b;
+        }
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0066cc;
+            margin-bottom: 0.5rem;
+        }
+        .kpi-card.success .kpi-value {
+            color: #00b8a9;
+        }
+        .kpi-card.warning .kpi-value {
+            color: #f8b739;
+        }
+        .kpi-card.danger .kpi-value {
+            color: #ff6b6b;
+        }
+        .kpi-subtitle {
+            font-size: 0.85rem;
+            color: #999;
+        }
+        .kpi-delta {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .delta-up {
+            color: #00b8a9;
+        }
+        .delta-down {
+            color: #ff6b6b;
+        }
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .list-item:last-child {
+            border-bottom: none;
+        }
+        .list-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .list-value {
+            font-weight: 600;
+            color: #111;
+            font-size: 0.95rem;
+        }
+        .chart-container {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #0066cc;
+            margin-bottom: 1rem;
+        }
+        .alert-box {
+            background: linear-gradient(135deg, #ffe6e6 0%, #ffd9d9 100%);
+            border-left: 4px solid #ff6b6b;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .alert-box.success {
+            background: linear-gradient(135deg, #e6f9f5 0%, #d9f5f0 100%);
+            border-left-color: #00b8a9;
+        }
+        .alert-box.warning {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff5d9 100%);
+            border-left-color: #f8b739;
+        }
+        .alert-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        .alert-content h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: #333;
+        }
+        .alert-content p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .refresh-btn {
+            background: #0066cc;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+        }
+        .refresh-btn:hover {
+            background: #0052a3;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .metric-badge {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        .trend-positive {
+            color: #00b8a9;
+        }
+        .trend-negative {
+            color: #ff6b6b;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                <div>
+                    <h1>🏥 Apollo Executive Dashboard</h1>
+                    <p style="opacity: 0.9; margin-top: 0.5rem;">ระบบมอนิเตอร์ผลการดำเนินงาน (Real-time Operations Center)</p>
+                </div>
+                <button class="refresh-btn mt-4 md:mt-0">
+                    <ion-icon name="refresh-outline"></ion-icon>
+                    <span id="refreshTime">รีเฟรช</span>
+                </button>
+            </div>
+            <div class="status">
+                <div class="status-item">
+                    <span class="status-dot"></span>
+                    <span>ระบบ HIS: Active</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-dot"></span>
+                    <span>IM Data Flow: Connected</span>
+                </div>
+                <div class="status-item">
+                    <span id="lastUpdated">ข้อมูลล่าสุด: --:--:--</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alert Sections -->
+        <div id="alertContainer"></div>
+
+        <!-- Key Metrics Overview -->
+        <h2 style="color: white; font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; margin-top: 2rem;">
+            📊 ตัวชี้วัดสำคัญ (KPIs)
+        </h2>
+
+        <!-- Section 1: Clinical Excellence (ความเป็นเลิศทางการรักษา) -->
+        <div style="margin-bottom: 2rem;">
+            <h3 style="color: white; font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;">
+                💚 ความเป็นเลิศทางการรักษา (Clinical Excellence)
+            </h3>
+            <div class="stats-grid">
+                
+                <!-- Sepsis Alert System -->
+                <div class="kpi-card danger">
+                    <h3 class="kpi-title"><ion-icon name="alert-circle-outline"></ion-icon>Sepsis Alert System</h3>
+                    <div>
+                        <div class="kpi-subtitle">ผู้ป่วยสงสัย Sepsis วันนี้</div>
+                        <div class="kpi-value" id="sepsis_alert">0</div>
+                        <div class="kpi-subtitle">ติดตามการรักษา (ให้ยาฆ่าเชื้อ)</div>
+                        <div class="list-item" style="padding: 0; margin-top: 0.75rem;">
+                            <span class="list-label">อัตราการเสียชีวิต (ปี 2567)</span>
+                            <span class="list-value trend-positive">↓ 14 ราย (53% ลด)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medical Record Completeness -->
+                <div class="kpi-card primary">
+                    <h3 class="kpi-title"><ion-icon name="document-outline"></ion-icon>ความสมบูรณ์ Med Record</h3>
+                    <div>
+                        <div class="list-item" style="padding: 0; margin-bottom: 0.75rem;">
+                            <span class="list-label">IPD (Inpatient)</span>
+                            <span class="list-value" id="med_ipd">91.1%</span>
+                        </div>
+                        <div class="list-item" style="padding: 0;">
+                            <span class="list-label">OPD (Outpatient)</span>
+                            <span class="list-value" id="med_opd">80.6%</span>
+                        </div>
+                        <div class="metric-badge">เป้าหมาย: 85%</div>
+                    </div>
+                </div>
+
+                <!-- Patient Satisfaction -->
+                <div class="kpi-card success">
+                    <h3 class="kpi-title"><ion-icon name="heart-outline"></ion-icon>ความพึงพอใจผู้ป่วย</h3>
+                    <div>
+                        <div class="kpi-value" id="satisfaction">4.3</div>
+                        <div class="kpi-subtitle">คะแนนเฉลี่ย (โครงการ Quality)</div>
+                        <div class="kpi-delta delta-positive">
+                            ↑ เพิ่มจาก 3.8 (ปี 2565)
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Section 2: Operational Efficiency (ประสิทธิภาพสูงสุด) -->
+        <div style="margin-bottom: 2rem;">
+            <h3 style="color: white; font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;">
+                ⚡ ประสิทธิภาพสูงสุดในการดำเนินงาน (Operational Efficiency)
+            </h3>
+            <div class="stats-grid">
+                
+                <!-- Length of Stay Management -->
+                <div class="kpi-card warning">
+                    <h3 class="kpi-title"><ion-icon name="bed-outline"></ion-icon>การบริหาร LOS (Length of Stay)</h3>
+                    <div>
+                        <div class="kpi-subtitle">เคสนอนเกิน WtLos (วันนี้)</div>
+                        <div class="kpi-value" id="los_over">3</div>
+                        <div class="list-item" style="padding: 0; margin-top: 0.75rem;">
+                            <span class="list-label">เสี่ยงขาดทุน</span>
+                            <span class="list-value">UGIB: 7 วัน (WtLos: 4)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inventory Management - MOS -->
+                <div class="kpi-card success">
+                    <h3 class="kpi-title"><ion-icon name="medkit-outline"></ion-icon">MOS (Month of Supply)</h3>
+                    <div>
+                        <div class="list-item" style="padding: 0; margin-bottom: 0.75rem;">
+                            <span class="list-label">ยา (เฉลี่ย)</span>
+                            <span class="list-value" id="mos_drug">23.51</span>
+                        </div>
+                        <div class="list-item" style="padding: 0; margin-bottom: 0.75rem;">
+                            <span class="list-label">เวชภัณฑ์</span>
+                            <span class="list-value" id="mos_supply">15.30</span>
+                        </div>
+                        <div class="kpi-subtitle">วัน | เป้า: < 28 วัน</div>
+                        <div class="kpi-delta delta-positive">
+                            ↓ ลดจาก 4 เดือน (ปี 2564)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Waiting Time Management -->
+                <div class="kpi-card warning">
+                    <h3 class="kpi-title"><ion-icon name="time-outline"></ion-icon>Waiting Time (ER/OPD)</h3>
+                    <div>
+                        <div class="kpi-subtitle">ผู้ป่วยรอ > 30 นาที</div>
+                        <div class="kpi-value" id="wait_long">2</div>
+                        <div class="list-item" style="padding: 0; margin-top: 0.75rem;">
+                            <span class="list-label">เวลารอเฉลี่ย</span>
+                            <span class="list-value" id="wait_avg">22</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patient Flow -->
+                <div class="kpi-card primary">
+                    <h3 class="kpi-title"><ion-icon name="people-outline"></ion-icon>สถิติผู้ป่วย (วันนี้)</h3>
+                    <div>
+                        <div class="list-item" style="padding: 0; margin-bottom: 0.5rem;">
+                            <span class="list-label">VN (ครั้ง)</span>
+                            <span class="list-value" id="stat_vn">1,168</span>
+                        </div>
+                        <div class="list-item" style="padding: 0; margin-bottom: 0.5rem;">
+                            <span class="list-label">HN (คน)</span>
+                            <span class="list-value" id="stat_hn">86</span>
+                        </div>
+                        <div class="list-item" style="padding: 0;">
+                            <span class="list-label">Admit</span>
+                            <span class="list-value" id="stat_admit">30</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Section 3: Financial Performance (ผลประกอบการ) -->
+        <div style="margin-bottom: 2rem;">
+            <h3 style="color: white; font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;">
+                💰 ผลประกอบการที่ยั่งยืน (Financial Performance)
+            </h3>
+            <div class="stats-grid">
+                
+                <!-- Revenue Leakage Control -->
+                <div class="kpi-card success">
+                    <h3 class="kpi-title"><ion-icon name="shield-checkmark-outline"></ion-icon>Rights Check System</h3>
+                    <div>
+                        <div class="kpi-subtitle">ค่าใช้จ่ายจากการให้สิทธิผิด (ปี 2567)</div>
+                        <div class="kpi-value" id="right_cost">40,508</div>
+                        <div class="kpi-subtitle">฿</div>
+                        <div class="kpi-delta delta-positive">
+                            ↓ ลดจาก 537,809 ฿ (ปี 2562)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Inventory Optimization -->
+                <div class="kpi-card primary">
+                    <h3 class="kpi-title"><ion-icon name="bar-chart-outline"></ion-icon>AI Inventory System</h3>
+                    <div>
+                        <div class="kpi-subtitle">ประหยัดต้นทุนสินค้าคงคลัง</div>
+                        <div class="kpi-value" id="inventory_save">20%</div>
+                        <div class="list-item" style="padding: 0; margin-top: 0.75rem;">
+                            <span class="list-label">เงินทุนหมุนเวียน</span>
+                            <span class="list-value">Unlocked ✓</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DRG Performance -->
+                <div class="kpi-card warning">
+                    <h3 class="kpi-title"><ion-icon name="trending-up-outline"></ion-icon>DRG Performance</h3>
+                    <div>
+                        <div class="kpi-subtitle">ประสิทธิภาพการเบิกจ่าย</div>
+                        <div class="kpi-value" id="drg_efficiency">94.2%</div>
+                        <div class="kpi-subtitle">ของเป้าหมาย</div>
+                        <div class="metric-badge">vs. 85% (Industry Avg)</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+            
+            <!-- Sepsis Mortality Trend -->
+            <div class="chart-container">
+                <h3 class="chart-title">📉 Sepsis Mortality Trend (ปี 2562-2567)</h3>
+                <canvas id="sepsisTrendChart" style="max-height: 250px;"></canvas>
+            </div>
+
+            <!-- AI Inventory Prediction -->
+            <div class="chart-container">
+                <h3 class="chart-title">🤖 AI Inventory Prediction (Drug MOS)</h3>
+                <canvas id="mosPredictionChart" style="max-height: 250px;"></canvas>
+            </div>
+
+        </div>
+
+        <!-- Action Alerts -->
+        <div style="margin-top: 2rem;">
+            <h3 style="color: white; font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;">
+                🔔 Alerts & Actions
+            </h3>
+            <div id="actionAlerts"></div>
+        </div>
+
+    </div>
+
+    <script>
+        // Initialize charts
+        let sepsisTrendChart, mosPredictionChart;
+
+        function initCharts() {
+            // Sepsis Mortality Trend Chart
+            const sepsisTrendCtx = document.getElementById('sepsisTrendChart').getContext('2d');
+            sepsisTrendChart = new Chart(sepsisTrendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['2562', '2563', '2564', '2565', '2566', '2567'],
+                    datasets: [{
+                        label: 'Sepsis Deaths',
+                        data: [45, 42, 30, 22, 18, 14],
+                        borderColor: '#ff6b6b',
+                        backgroundColor: 'rgba(255, 107, 107, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 6,
+                        pointBackgroundColor: '#ff6b6b',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: '#666' },
+                            grid: { color: '#f0f0f0' }
+                        },
+                        x: {
+                            ticks: { color: '#666' },
+                            grid: { color: '#f0f0f0' }
+                        }
+                    }
+                }
+            });
+
+            // MOS Prediction Chart
+            const mosPredictionCtx = document.getElementById('mosPredictionChart').getContext('2d');
+            mosPredictionChart = new Chart(mosPredictionCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['ยาที่ใช้จริง', 'AI Prediction'],
+                    datasets: [{
+                        label: 'MOS (วัน)',
+                        data: [85, 68],
+                        backgroundColor: ['#ff6b6b', '#00b8a9'],
+                        borderRadius: 8,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: '#666' },
+                            grid: { color: '#f0f0f0' }
+                        },
+                        x: {
+                            ticks: { color: '#666' },
+                            grid: { color: '#f0f0f0', drawBorder: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        function generateAlerts() {
+            const alertContainer = document.getElementById('alertContainer');
+            alertContainer.innerHTML = '';
+
+            const alerts = [
+                {
+                    type: 'danger',
+                    title: '🚨 URGENT: Sepsis Alert Detected',
+                    message: 'ผู้ป่วย ID: PT-2025-11-001 เข้าเกณฑ์ Sepsis (SIRS >= 2 ใน 4) - แพทย์เวรและพยาบาล IC ได้รับแจ้งเตือน ต้องดูโดยไว!'
+                },
+                {
+                    type: 'warning',
+                    title: '⚠️ LOS Alert: ผู้ป่วยนอนเกิน WtLos',
+                    message: 'เคส UGIB (PT-2025-11-015) นอนแล้ว 7 วัน แต่ WtLos คือ 4 วัน - ต้องวางแผนจำหน่าย (Discharge Plan)'
+                },
+                {
+                    type: 'success',
+                    title: '✅ Rights Check: ป้องกันการให้สิทธิผิด',
+                    message: 'ระบบพบ 1 รายที่ย้ายสิทธิ์ - ผู้ป่วยต้องจ่ายเงินสดหรือย้ายไปโรงพยาบาลที่มีสิทธิ์'
+                },
+                {
+                    type: 'success',
+                    title: '🤖 AI Inventory Alert: คลังยาอัจฉริยะ',
+                    message: 'AI ทำนายว่า ต้องสั่งยา Antibiotic ใหม่ใน 5 วัน ประหยัดเงินทุนหมุนเวียนได้ 15%'
+                }
+            ];
+
+            alerts.forEach(alert => {
+                const alertEl = document.createElement('div');
+                alertEl.className = `alert-box ${alert.type}`;
+                alertEl.innerHTML = `
+                    <div class="alert-content">
+                        <h4>${alert.title}</h4>
+                        <p>${alert.message}</p>
+                    </div>
+                `;
+                alertContainer.appendChild(alertEl);
+            });
+        }
+
+        function updateDashboard() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById('lastUpdated').textContent = `ข้อมูลล่าสุด: ${timeStr}`;
+            document.getElementById('refreshTime').textContent = `✓ อัปเดต ${timeStr.split(':')[1]}`;
+
+            // Simulate data changes
+            document.getElementById('stat_vn').textContent = 1168 + Math.floor(Math.random() * 30);
+            document.getElementById('stat_hn').textContent = 86 + Math.floor(Math.random() * 8);
+            document.getElementById('wait_long').textContent = Math.floor(Math.random() * 5);
+            document.getElementById('los_over').textContent = Math.floor(Math.random() * 4);
+            document.getElementById('sepsis_alert').textContent = Math.floor(Math.random() * 3);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();
+            generateAlerts();
+            updateDashboard();
+        });
+
+        // Refresh button
+        document.querySelector('.refresh-btn').addEventListener('click', function() {
+            updateDashboard();
+            this.style.animation = 'spin 1s linear';
+            setTimeout(() => { this.style.animation = ''; }, 1000);
+        });
+
+        // Auto update every 30 seconds
+        setInterval(updateDashboard, 30000);
+    </script>
+
+</body>
+</html>

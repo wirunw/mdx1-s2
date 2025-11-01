@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flow Chart: กระบวนการนวัตกรรมแบบ Customer Driven</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+        /* Custom styles for arrows and connectors */
+        .flow-arrow {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: #6b7280; /* gray-500 */
+        }
+        .flow-arrow::after {
+            content: '▼'; /* Down arrow */
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+        .flow-box {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            text-align: center;
+        }
+        .flow-box-primary {
+            background-color: #dbeafe;
+            border: 1px solid #93c5fd;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .flow-box-secondary {
+            background-color: #dcfce7;
+            border: 1px solid #86efac;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .flow-box-crisis {
+            background-color: #fee2e2;
+            border: 1px solid #fca5a5;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .flow-box-opportunity {
+            background-color: #fef3c7;
+            border: 1px solid #fcd34d;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl font-bold text-center text-blue-800 mb-8">Flow Chart: กระบวนการนวัตกรรมแบบ Customer Driven</h1>
+        <p class="text-center text-gray-600 mb-12">ถอดบทเรียนจาก 2 เรื่องราว: นวัตกรรมจาก "วิกฤต" และ "โอกาส"</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            
+            <!-- Story 1: Crisis -->
+            <div class="bg-white p-6 rounded-xl shadow-2xl border-l-8 border-red-500">
+                <h2 class="text-2xl font-bold text-center text-red-700 mb-6">💥 Story 1: นวัตกรรมจาก "วิกฤต" (Crisis)</h2>
+                <div class="flex flex-col items-center">
+
+                    <div class="flow-box-crisis">
+                        <h3 class="font-bold">วิกฤตโควิด-19</h3>
+                        <p class="text-sm">ปิดประเทศ, นำเข้าอุปกรณ์ไม่ได้</p>
+                    </div>
+
+                    <div class="flow-arrow"></div>
+
+                    <div class="flow-box">
+                        <h3 class="font-bold">รพ. ต้องการห้องความดันลบ</h3>
+                        <p class="text-sm">โจทย์เร่งด่วน: ภายใน 25 วัน (ปกติ 6 เดือน)</p>
+                    </div>
+
+                    <div class="flow-arrow"></div>
+
+                    <div class="flow-box">
+                        <h3 class="font-bold">รับความท้าทาย + Collaboration</h3>
+                        <p class="text-sm">"ถ้าคุณไม่ทำ ก็ไม่มีใครทำแล้ว"</p>
+                        <p class="text-sm">+ เรียนรู้ร่วมกับ รพ. และ มหิดล</p>
+                    </div>
+
+                    <div class="flow-arrow"></div>
+
+                    <div class="flow-box-primary">
+                        <h3 class="font-bold">Prototype 1 สำเร็จ</h3>
+                        <p class="text-sm">สร้างห้อง Cohort + ICU ใน 3 สัปดาห์</p>
+                    </div>
+
+                    <div class="flow-arrow"></div>
+
+                    <div class="flow-box">
+                        <h3 class="font-bold">คิดต่อแบบอุตสาหกรรม (Scale)</h3>
+                        <p class="text-sm">"ทำอย่างไรให้ทำซ้ำได้?"</p>
+                    </div>
+
+                    <div class="flow-arrow"></div>
+
+                    <div class="flow-box-primary">
+                        <h3 class="font-bold">พัฒนา "Modular Design"</h3>
+                        <p class="text-sm">ผลิตจากโรงงาน, ติดตั้งเร็ว, มีมาตรฐาน</p>
+                    </div>
+
+                    <div class="flow-arrow"></div>
+
+                    <div class="flow-box-secondary">
+                        <h3 class="font-bold">ขยายผลและแตกหน่อ (Spin-off)</h3>
+                        <p class="text-sm">ติดตั้ง 400+ ห้อง และตั้งบริษัทใหม่</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Story 2: Opportunity -->
+            <div class="bg-white p-6 rounded-xl shadow-2xl border-l-8 border-green-500">
+                <h2 class="text-2xl font-bold text-center text-green-700 mb-6">📈 Story 2: นวัตกรรมจาก "โอกาส" (Opportunity)</h2>
+                <div class="flex flex-col items-center">
+
+                    <div class="flow-box-opportunity">
+                        <h3 class="font-bold">มี Network ในวงการแพทย์</h3>
+                        <p class="text-sm">เริ่มจาก Story 1 และการต่อยอด</p>
+                    </div>
+
+                    <div class="flow-arrow"></div>
+
+                    <div class="flow-box">
+                        <h3 class="font-bold">ได้รับโจทย์ (Problem)</h3>
+                        <p class="text-sm">"เครื่องมือแพทย์หาไม่เจอ"</p>
+                    </div>
+
+                    <div class="flow-arrow"></div>
+
+                    <div class="flow-box">
+                        <h3 class="font-bold">ไอเดียเริ่มต้น (Internal Idea)</h3>
+                        <p class="text-sm">ทำ "ซอฟต์แวร์" บริหารจัดการ</p>
+                    </div>
+
+                    <div class="flow-arrow"></div>
+
+                    <div class="flow-box-opportunity">
+                        <h3 class="font-bold">ฟังเสียงลูกค้า (Customer Driven)</h3>
+                        <p class="text-sm">พบความต้องการจริง (Need)</p>
+                        <p class="font-semibold">"ไม่ได้อยากได้แค่ Software แต่อยากให้มาบริหารจัดการแทน"</p>
+                    </div>
+
+                    <div class="flow-arrow"></div>
+
+                    <div class="flow-box">
+                        <h3 class="font-bold">ปรับตัว (Flex)</h3>
+                        <p class="text-sm">ยอมเปลี่ยน Business Model</p>
+                    </div>
+
+                    <div class="flow-arrow"></div>
+
+                    <div class="flow-box-primary">
+                        <h3 class="font-bold">ตั้งบริษัทใหม่</h3>
+                        <p class="text-sm">รับ "บริหารจัดการเครื่องมือแพทย์" ทั้งระบบ</p>
+                    </div>
+
+                    <div class="flow-arrow"></div>
+
+                    <div class="flow-box-secondary">
+                        <h3 class="font-bold">กลายเป็น "Solution Base"</h3>
+                        <p class="text-sm">ซอฟต์แวร์ (Software) + บริการ (Activity)</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center text-gray-500 mt-12 text-sm">
+            ออกแบบโดยเภสัชกรวิรุณ เวชศิริ
+        </footer>
+    </div>
+</body>
+</html>

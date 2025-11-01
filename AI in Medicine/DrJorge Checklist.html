@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist ตรรกะ Medical AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Sarabun', 'Inter', sans-serif;
+            background-color: #f3f4f6; /* gray-100 */
+        }
+        .container {
+            max-width: 48rem; /* max-w-3xl */
+            margin-left: auto; /* mx-auto */
+            margin-right: auto; /* mx-auto */
+            padding: 1.5rem; /* p-6 */
+            background-color: #ffffff; /* bg-white */
+            border-radius: 1rem; /* rounded-2xl */
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); /* shadow-xl */
+            margin-top: 3rem; /* mt-12 */
+            border: 1px solid #e5e7eb; /* border, border-gray-200 */
+        }
+        .title {
+            font-size: 1.875rem; /* text-3xl */
+            line-height: 2.25rem;
+            font-weight: 700; /* font-bold */
+            text-align: center; /* text-center */
+            margin-bottom: 0.5rem; /* mb-2 */
+            color: #134e4a; /* teal-900 */
+        }
+        .subtitle {
+            text-align: center; /* text-center */
+            font-size: 1.125rem; /* text-lg */
+            line-height: 1.75rem;
+            color: #4b5563; /* text-gray-600 */
+            margin-bottom: 2rem; /* mb-8 */
+        }
+        
+        .progress-bar-container {
+            width: 100%; /* w-full */
+            background-color: #e5e7eb; /* bg-gray-200 */
+            border-radius: 9999px; /* rounded-full */
+            height: 1rem; /* h-4 */
+            margin-bottom: 0.5rem; /* mb-2 */
+        }
+        .progress-bar {
+            background-color: #0d9488; /* bg-teal-600 */
+            height: 1rem; /* h-4 */
+            border-radius: 9999px; /* rounded-full */
+            transition: all 0.5s ease; /* transition-all duration-500 */
+            background-color: #0d9488; /* teal-600 */
+        }
+        .progress-text {
+            font-size: 0.875rem; /* text-sm */
+            line-height: 1.25rem;
+            font-weight: 600; /* font-semibold */
+            color: #374151; /* text-gray-700 */
+            text-align: right; /* text-right */
+            margin-bottom: 1.5rem; /* mb-6 */
+        }
+
+        .checklist-section-title {
+            font-size: 1.5rem; /* text-2xl */
+            line-height: 2rem;
+            font-weight: 600; /* font-semibold */
+            margin-top: 2rem; /* mt-8 */
+            margin-bottom: 1rem; /* mb-4 */
+            border-bottom-width: 2px; /* border-b-2 */
+            padding-bottom: 0.5rem; /* pb-2 */
+            color: #0369a1; /* sky-700 */
+            border-color: #e0f2fe; /* sky-100 */
+        }
+
+        .check-item {
+            display: flex; /* flex */
+            align-items: flex-start; /* items-start */
+            padding: 1rem; /* p-4 */
+            margin-top: 0.5rem; /* my-2 */
+            margin-bottom: 0.5rem; /* my-2 */
+            border-radius: 0.5rem; /* rounded-lg */
+            transition: all 0.3s ease; /* transition-all duration-300 */
+            background-color: #f8fafc; /* gray-50 */
+            border: 1px solid #e5e7eb; /* gray-200 */
+        }
+        .check-item input[type="checkbox"] {
+            height: 1.5rem; /* h-6 */
+            width: 1.5rem; /* w-6 */
+            accent-color: #0d9488; /* text-teal-600 */
+            border-radius: 0.5rem; /* rounded-lg */
+            border: 1px solid #d1d5db; /* border-gray-300 */
+            margin-top: 0.25rem; /* mt-1 */
+            flex-shrink: 0; /* flex-shrink-0 */
+            filter: hue-rotate(10deg);
+        }
+        .check-item label {
+            margin-left: 1rem; /* ml-4 */
+            color: #1f2937; /* text-gray-800 */
+            cursor: pointer; /* cursor-pointer */
+        }
+        .check-item-title {
+            font-weight: 600; /* font-semibold */
+        }
+        .check-item-desc {
+            font-size: 0.875rem; /* text-sm */
+            line-height: 1.25rem;
+            color: #4b5563; /* text-gray-600 */
+        }
+        .check-item input[type="checkbox"]:checked + label .check-item-title {
+            text-decoration: line-through; /* line-through */
+            color: #6b7280; /* text-gray-500 */
+        }
+        .check-item:hover {
+            background-color: #f0fdfa; /* teal-50 */
+            border-color: #ccfbf1; /* teal-100 */
+        }
+        
+        .reset-button {
+            width: 100%; /* w-full */
+            text-align: center; /* text-center */
+            padding: 0.75rem 1.5rem; /* py-3 px-6 */
+            background-color: #4b5563; /* bg-gray-600 */
+            color: #ffffff; /* text-white */
+            font-weight: 600; /* font-semibold */
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1); /* shadow-md */
+            margin-top: 2.5rem; /* mt-10 */
+            transition: all 0.3s ease; /* transition-all duration-300 */
+            border: none;
+            outline: none;
+        }
+        .reset-button:hover {
+            background-color: #374151; /* hover:bg-gray-700 */
+        }
+        .reset-button:focus {
+            outline: 2px solid #6b7280; /* focus:ring-2 focus:ring-gray-500 */
+            outline-offset: 2px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="title">Checklist ตรรกะ Medical AI</h1>
+        <p class="subtitle">ทบทวนแนวคิดและการปฏิบัติ จากการบรรยาย "Medical AI Ecosystem in UK"</p>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar-container">
+            <div id="progressBar" class="progress-bar" style="width: 0%"></div>
+        </div>
+        <p id="progressText" class="progress-text">0% 완료</p>
+
+        <!-- Section 1: Key Concepts to Understand -->
+        <div>
+            <h2 class="checklist-section-title">ส่วนที่ 1: สิ่งที่ต้องเข้าใจ (Key Concepts)</h2>
+            <div id="checklist-concepts">
+                
+                <div class="check-item">
+                    <input type="checkbox" id="c1" class="checklist-box">
+                    <label for="c1">
+                        <div class="check-item-title">แนวคิด "5 คันโยก" (5 Levers)</div>
+                        <div class="check-item-desc">AI ไม่ได้มีแค่ประสิทธิภาพทางคลินิก แต่ส่งผลต่อ (1) การดูแลผู้ป่วย, (2) ประสิทธิภาพคลินิก, (3) การพัฒนายา, (4) การปฏิบัติงาน, และ (5) การแพทย์เน้นคุณค่า</div>
+                    </label>
+                </div>
+
+                <div class="check-item">
+                    <input type="checkbox" id="c2" class="checklist-box">
+                    <label for="c2">
+                        <div class="check-item-title">วิวัฒนาการ 4 ระดับ (AI Maturity)</div>
+                        <div class="check-item-desc">เข้าใจการเดินทางจาก "Single Purpose" (เครื่องมือ) สู่ "AutoML" (สายการผลิต), "Foundation Models" (โรงงาน), และ "Multimodal FM" (มันสมององค์กร)</div>
+                    </label>
+                </div>
+
+                <div class="check-item">
+                    <input type="checkbox" id="c3" class="checklist-box">
+                    <label for="c3">
+                        <div class="check-item-title">อุปสรรค "การข้ามเหวลึก" (Crossing the Chasm)</div>
+                        <div class="check-item-desc">ตระหนักถึงช่องว่างมหาศาลระหว่าง "ความแม่นยำในแล็บ" (Theoretical Efficacy) กับ "การใช้งานได้จริง" (Practical Utility)</div>
+                    </label>
+                </div>
+
+                <div class="check-item">
+                    <input type="checkbox" id="c4" class="checklist-box">
+                    <label for="c4">
+                        <div class="check-item-title">ทางออก: Platforms & Open-Source</div>
+                        <div class="check-item-desc">เข้าใจว่าทำไมยุทธศาสตร์แบบ "แพลตฟอร์ม" (Platform Strategy) และการใช้ "Open-Source" (เช่น MONAI) ถึงเป็นทางออกที่ยั่งยืนกว่าการสร้างไซโล AI</div>
+                    </label>
+                </div>
+
+                <div class="check-item">
+                    <input type="checkbox" id="c5" class="checklist-box">
+                    <label for="c5">
+                        <div class="check-item-title">วงจรความปลอดภัย (Lifecycle AI Safety)</div>
+                        <div class="check-item-desc">ความปลอดภัย AI ไม่ใช่ทำครั้งเดียวจบ แต่ต้องมีครบ 3 ระยะ: Pre-Deployment (ก่อนใช้), Live (ระหว่างใช้), และ Post-Deployment (หลังใช้)</div>
+                    </label>
+                </div>
+                
+                <div class="check-item">
+                    <input type="checkbox" id="c6" class="checklist-box">
+                    <label for="c6">
+                        <div class="check-item-title">ความท้าทายของข้อมูลจริง (Real-World Chaos)</div>
+                        <div class="check-item-desc">ข้อมูลจริงเต็มไปด้วย Artefacts (ภาพเพี้ยน), Acquisition Differences (เครื่องมือต่างกัน), และ Missing Data (ข้อมูลไม่ครบ)</div>
+                    </label>
+                </div>
+
+                <div class="check-item">
+                    <input type="checkbox" id="c7" class="checklist-box">
+                    <label for="c7">
+                        <div class="check-item-title">AI ที่ดีต้อง "ไม่มั่นใจ" เป็น (Uncertainty)</div>
+                        <div class="check-item-desc">AI ที่ปลอดภัยต้องสามารถประเมิน "ความไม่แน่นอน" (Uncertainty) ของตัวเองได้ เพื่อให้แพทย์รู้ว่าเมื่อใดควรตรวจสอบซ้ำ</div>
+                    </label>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Section 2: Key Actions to Take -->
+        <div>
+            <h2 class="checklist-section-title">ส่วนที่ 2: สิ่งที่ต้องทำ (Key Actions)</h2>
+            <div id="checklist-actions">
+
+                <div class="check-item">
+                    <input type="checkbox" id="a1" class="checklist-box">
+                    <label for="a1">
+                        <div class="check-item-title">กำหนด "สะพาน" 4 เสาหลัก (4 Pillars)</div>
+                        <div class="check-item-desc">ในการนำ AI มาใช้ ต้องวางแผนแก้ 4 ปัญหาหลัก: (1) Data Access, (2) Easy to Use, (3) Integrated, และ (4) Generates Value</div>
+                    </label>
+                </div>
+
+                <div class="check-item">
+                    <input type="checkbox" id="a2" class="checklist-box">
+                    <label for="a2">
+                        <div class="check-item-title">วางแผน "Lifecycle AI Safety"</div>
+                        <div class="check-item-desc">สร้างกระบวนการกำกับดูแล AI ให้ครบทั้ง 3 ระยะ (Pre, Live, Post) โดยเฉพาะการทำ Post-Market Surveillance (PMS)</div>
+                    </label>
+                </div>
+
+                <div class="check-item">
+                    <input type="checkbox" id="a3" class="checklist-box">
+                    <label for="a3">
+                        <div class="check-item-title">บูรณาการกับ Workflow (Integration)</div>
+                        <div class="check-item-desc">วางแผนให้ AI "ซ่อนตัว" และ "ไร้รอยต่อ" ในระบบเดิม (เช่น PACS, RIS) แทนที่จะสร้างระบบใหม่ให้แพทย์เรียนรู้</div>
+                    </label>
+                </div>
+                
+                <div class="check-item">
+                    <input type="checkbox" id="a4" class="checklist-box">
+                    <label for="a4">
+                        <div class="check-item-title">ใช้ AI เพื่อ "เข้าใจกระบวนการ" (Process Insight)</div>
+                        <div class="check-item-desc">ขยายการใช้ AI จากแค่ "การวินิจฉัย" ไปสู่ "การวิเคราะห์" การดำเนินงาน เช่น Patient Flow, การหาคอขวด, หรือการเฝ้าระวัง (Surveillance)</div>
+                    </label>
+                </div>
+
+                <div class="check-item">
+                    <input type="checkbox" id="a5" class="checklist-box">
+                    <label for="a5">
+                        <div class="check-item-title">ส่งเสริมการทำงานร่วมกัน (Collaboration)</div>
+                        <div class="check-item-desc">ผลักดันการใช้มาตรฐานกลาง (FHIR, DICOM) และพิจารณาแนวคิด Federated Learning เพื่อการเรียนรู้ร่วมกันโดยข้อมูลไม่รั่วไหล</div>
+                    </label>
+                </div>
+
+                <div class="check-item">
+                    <input type="checkbox" id="a6" class="checklist-box">
+                    <label for="a6">
+                        <div class="check-item-title">สร้างระบบตรวจจับข้อมูลผิด (Data QA)</div>
+                        <div class="check-item-desc">พัฒนาระบบ AI หรือกระบวนการเพื่อคัดกรอง "ข้อมูลขยะ" (Wrong Data) หรือ "ข้อมูลผิดปกติ" (Outliers) ก่อนเข้าสู่โมเดล</div>
+                    </label>
+                </div>
+
+                <div class="check-item">
+                    <input type="checkbox" id="a7" class="checklist-box">
+                    <label for="a7">
+                        <div class="check-item-title">ตอบ 5 คำถามเชิงกลยุทธ์สำหรับผู้บริหาร</div>
+                        <div class="check-item-desc">ไตร่ตรอง 5 ประเด็นสำคัญ: (1) Commoditisation, (2) Requirements, (3) Foundation Models, (4) Scalability, และ (5) Solution/Platform</div>
+                    </label>
+                </div>
+
+            </div>
+        </div>
+        
+        <button id="resetButton" class="reset-button">เริ่มต้นใหม่ (Reset)</button>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkboxes = document.querySelectorAll('.checklist-box');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const resetButton = document.getElementById('resetButton');
+
+            const totalCheckboxes = checkboxes.length;
+
+            function updateProgress() {
+                const checkedCount = document.querySelectorAll('.checklist-box:checked').length;
+                const percentage = totalCheckboxes > 0 ? Math.round((checkedCount / totalCheckboxes) * 100) : 0;
+                
+                progressBar.style.width = percentage + '%';
+                progressText.innerText = `${percentage}% ( ${checkedCount} / ${totalCheckboxes} รายการ )`;
+            }
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateProgress);
+            });
+
+            resetButton.addEventListener('click', () => {
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                updateProgress();
+            });
+
+            // Initial calculation
+            updateProgress();
+        });
+    </script>
+
+</body>
+</html>

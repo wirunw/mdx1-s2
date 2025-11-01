@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagram: การเชื่อมโยงระบบสารสนเทศ (IM Data Flow)</title>
+    <!-- โหลด Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* ใช้ฟอนต์ Sarabun */
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap');
+        * {
+            transition: all 0.3s ease;
+        }
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        /* กล่องหลัก (Hub) */
+        .hub-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 1.5rem; /* 24px */
+            box-shadow: 0 20px 40px -10px rgba(102, 126, 234, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem; /* 40px */
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        .hub-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: pulse-glow 4s ease-in-out infinite;
+            z-index: 0;
+        }
+        .hub-box > * {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        /* กล่องย่อย (Node) */
+        .node-box {
+            background: white;
+            border: 2px solid #e5e7eb; /* gray-200 */
+            border-radius: 1.25rem; /* 20px */
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 1.75rem; /* 28px */
+            text-align: center;
+            height: 100%; /* ทำให้กล่องสูงเท่ากัน */
+            position: relative;
+            overflow: hidden;
+        }
+        .node-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+        .node-box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -10px rgba(102, 126, 234, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
+        }
+        .node-title {
+            color: #667eea;
+            font-weight: 700;
+            font-size: 1.25rem; /* 20px */
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-top: 0.5rem;
+            padding-bottom: 0.75rem; /* 12px */
+            margin-bottom: 1.25rem; /* 20px */
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .node-content {
+            font-size: 0.9rem; /* 14px */
+            color: #4b5563; /* gray-700 */
+            text-align: left;
+            list-style-position: inside;
+        }
+        .node-content li {
+            margin-bottom: 0.5rem;
+            color: #5a6470;
+        }
+        /* เส้นเชื่อม (Arrow visual) */
+        .arrow-line {
+            position: relative;
+            padding: 2rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        .arrow-line svg {
+            width: 60px;
+            height: 60px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+        .arrow-line svg path {
+            stroke: url(#gradientArrow);
+            fill: none;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .arrow-line svg polygon {
+            fill: url(#gradientArrow);
+        }
+        /* Container styling */
+        .container-section {
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header Section -->
+        <div class="text-center mb-12 backdrop-blur-sm bg-white/10 rounded-2xl p-8 border border-white/20">
+            <h1 class="text-4xl md:text-5xl font-bold text-center text-white mb-4 drop-shadow-lg">
+                Diagram: การเชื่อมโยงระบบสารสนเทศ
+            </h1>
+            <h2 class="text-2xl md:text-3xl font-semibold text-white/90 mb-4">(IM Data Flow)</h2>
+            <p class="text-lg text-white/80 backdrop-blur-sm">
+                อ้างอิงจาก "Med talk Apollo" แสดงให้เห็นว่า IM เป็นศูนย์กลางเชื่อมโยงข้อมูลอย่างไร
+            </p>
+        </div>
+
+        <div class="flex flex-col items-center">
+            
+            <!-- 1. แหล่งข้อมูลต้นทาง (Source) -->
+            <div class="container-section w-full">
+                <h3 class="text-center text-white font-semibold text-lg mb-6 drop-shadow-md">แหล่งข้อมูลต้นทาง (Source Data)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full mb-8">
+                    <div class="node-box">
+                        <h2 class="node-title">ทีมคุณภาพ (PTC / QM)</h2>
+                        <ul class="node-content list-disc space-y-2">
+                            <li>Trigger tool (เครื่องมือดักจับ)</li>
+                            <li>ICD-complication (ภาวะแทรกซ้อน)</li>
+                            <li>Drug reconcile (การกระทบยอดบัญชียา)</li>
+                            <li>รายงาน IOR (รายงานอุบัติการณ์)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="node-box">
+                        <h2 class="node-title">เวชระเบียน</h2>
+                        <ul class="node-content list-disc space-y-2">
+                            <li>ความสมบูรณ์เวชระเบียน</li>
+                            <li>สิทธิผู้ป่วย</li>
+                            <li>การทบทวน (Audit)</li>
+                        </ul>
+                    </div>
+
+                    <div class="node-box">
+                        <h2 class="node-title">การบริการ (Service)</h2>
+                        <ul class="node-content list-disc space-y-2">
+                            <li>Photo identify (ยืนยันตัวตนด้วยภาพ)</li>
+                            <li>เชื่อมต่อข้อมูลฐานบัตรประชาชน</li>
+                            <li>LINE Notify (แจ้งเตือนเช็คสิทธิ์)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- เส้นเชื่อมโยง -->
+            <div class="arrow-line w-full">
+                <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="gradientArrow" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M 30 5 L 30 45" stroke-width="3"/>
+                    <polygon points="30,55 25,40 35,40" />
+                </svg>
+            </div>
+
+            <!-- 2. ศูนย์กลาง (HUB) -->
+            <div class="my-12 w-full max-w-md">
+                <div class="hub-box">
+                    <h1 class="text-5xl font-bold mb-2">IM</h1>
+                    <p class="text-2xl font-semibold mb-2">(Information Management)</p>
+                    <p class="text-lg text-white/90">ศูนย์กลางการจัดการและประมวลผลข้อมูลสารสนเทศ</p>
+                </div>
+            </div>
+
+            <!-- เส้นเชื่อมโยง -->
+            <div class="arrow-line w-full">
+                <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="gradientArrow2" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M 30 5 L 30 45" stroke="url(#gradientArrow2)" stroke-width="3"/>
+                    <polygon points="30,55 25,40 35,40" fill="url(#gradientArrow2)"/>
+                </svg>
+            </div>
+
+            <!-- 3. ปลายทาง (Destinations) -->
+            <div class="container-section w-full">
+                <h3 class="text-center text-white font-semibold text-lg mb-6 drop-shadow-md">ปลายทาง (Destinations)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mt-8">
+                    <div class="node-box">
+                        <h2 class="node-title">ฝ่ายบริหาร (Admin)</h2>
+                        <ul class="node-content list-disc space-y-2">
+                            <li>Density (ความหนาแน่นผู้ป่วย)</li>
+                            <li>Waiting time (เวลารอคอย)</li>
+                            <li>สถิติโรค / หัตถการ</li>
+                            <li>สถิติการเสียชีวิต</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="node-box">
+                        <h2 class="node-title">Back Office / การเงิน</h2>
+                        <ul class="node-content list-disc space-y-2">
+                            <li>AIPN / SSOP / SIMB (ระบบเบิกจ่าย)</li>
+                            <li>DRG (การจัดกลุ่มโรค)</li>
+                            <li>AdjRW (ค่าน้ำหนักสัมพัทธ์)</li>
+                            <li>Wt.Los. (วันนอนที่เหมาะสม)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist: AI ทางการแพทย์</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Sarabun', 'Inter', sans-serif;
+        }
+        .task-item {
+            transition: all 0.2s ease-in-out;
+        }
+        .task-item:hover {
+            background-color: #f9fafb; /* gray-50 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4 md:p-8 min-h-screen flex items-center justify-center">
+    <div class="max-w-2xl w-full mx-auto bg-white p-6 md:p-8 rounded-xl shadow-2xl">
+        
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+            <div>
+                <h1 class="text-3xl font-bold text-indigo-700">Checklist: AI ทางการแพทย์</h1>
+                <p class="text-lg text-gray-600 mt-1">สรุปประเด็นสำคัญจาก นพ.ปิยะฤทธิ์ อิทธิชัยวงศ์</p>
+            </div>
+            <button id="resetButton" class="mt-4 md:mt-0 bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600 transition-colors">
+                รีเซ็ต
+            </button>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="mb-6">
+            <div class="bg-gray-200 rounded-full h-4 overflow-hidden">
+                <div id="progressBar" class="bg-indigo-600 h-4 rounded-full transition-all duration-300" style="width: 0%;"></div>
+            </div>
+            <p id="progressText" class="text-center text-sm text-gray-600 mt-2">0% สำเร็จ</p>
+        </div>
+
+        <!-- Section 1: Key Concepts -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4 border-b-2 border-indigo-200 pb-2">✅ Checklist: ความเข้าใจ (Key Concepts)</h2>
+            <div id="taskListConcepts" class="space-y-3">
+                
+                <label class="task-item flex items-center p-3 rounded-lg cursor-pointer">
+                    <input type="checkbox" class="task-checkbox h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 peer">
+                    <span class="ml-3 text-base text-gray-700 peer-checked:line-through peer-checked:text-gray-400">
+                        AI (LLMs) มีความรู้ทางการแพทย์สูงมาก (เช่น สอบ USMLE 99.95%)
+                    </span>
+                </label>
+
+                <label class="task-item flex items-center p-3 rounded-lg cursor-pointer">
+                    <input type="checkbox" class="task-checkbox h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 peer">
+                    <span class="ml-3 text-base text-gray-700 peer-checked:line-through peer-checked:text-gray-400">
+                        คนไข้เริ่มใช้ AI (เช่น GPT-5 Pro) ตรวจสอบและท้าทายแพทย์แล้ว
+                    </span>
+                </label>
+
+                <label class="task-item flex items-center p-3 rounded-lg cursor-pointer">
+                    <input type="checkbox" class="task-checkbox h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 peer">
+                    <span class="ml-3 text-base text-gray-700 peer-checked:line-through peer-checked:text-gray-400">
+                        AI ยัง "หลอน" (Hallucination) ได้ แต่รุ่นใหม่เริ่ม "ไม่มั่นใจเป็น" (ตอบว่าไม่รู้)
+                    </span>
+                </label>
+
+                <label class="task-item flex items-center p-3 rounded-lg cursor-pointer">
+                    <input type="checkbox" class="task-checkbox h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 peer">
+                    <span class="ml-3 text-base text-gray-700 peer-checked:line-through peer-checked:text-gray-400">
+                        ต้นทุน AI ลดลงมาก (เช่น AI Scribe จาก 140 บาท เหลือ < 10 บาท)
+                    </span>
+                </label>
+
+                <label class="task-item flex items-center p-3 rounded-lg cursor-pointer">
+                    <input type="checkbox" class="task-checkbox h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 peer">
+                    <span class="ml-3 text-base text-gray-700 peer-checked:line-through peer-checked:text-gray-400">
+                        บริบท "ไทยคำอังกฤษคำ" (Code-switching) คือความท้าทายที่ AI ไทยต้องแก้
+                    </span>
+                </label>
+            </div>
+        </section>
+
+        <!-- Section 2: Action Items -->
+        <section>
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4 border-b-2 border-green-200 pb-2">🚀 Checklist: สิ่งที่ต้องทำ (Action Items)</h2>
+            <div id="taskListActions" class="space-y-3">
+                
+                <label class="task-item flex items-center p-3 rounded-lg cursor-pointer">
+                    <input type="checkbox" class="task-checkbox h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 peer">
+                    <span class="ml-3 text-base text-gray-700 peer-checked:line-through peer-checked:text-gray-400">
+                        ยอมรับ AI เป็นเครื่องมือที่ทรงพลัง ไม่ปัดตกข้อมูลจากคนไข้ทันที
+                    </span>
+                </label>
+
+                <label class="task-item flex items-center p-3 rounded-lg cursor-pointer">
+                    <input type="checkbox" class="task-checkbox h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 peer">
+                    <span class="ml-3 text-base text-gray-700 peer-checked:line-through peer-checked:text-gray-400">
+                        ปรับบทบาทจาก "ผู้วินิจฉัย" (Diagnostician) สู่ "ผู้อธิบาย" (Explainer)
+                    </span>
+                </label>
+
+                <label class="task-item flex items-center p-3 rounded-lg cursor-pointer">
+                    <input type="checkbox" class="task-checkbox h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 peer">
+                    <span class="ml-3 text-base text-gray-700 peer-checked:line-through peer-checked:text-gray-400">
+                        ใช้ AI เป็น "ผู้ช่วย" (Assistant) ไม่ใช่ "ผู้ทดแทน" (Replacement)
+                    </span>
+                </Dlabel>
+
+                <label class="task-item flex items-center p-3 rounded-lg cursor-pointer">
+                    <input type="checkbox" class="task-checkbox h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 peer">
+                    <span class="ml-3 text-base text-gray-700 peer-checked:line-through peer-checked:text-gray-400">
+                        ยืนยันความถูกต้องของ AI เสมอ (Human in the Loop)
+                    </span>
+                </label>
+
+                <label class="task-item flex items-center p-3 rounded-lg cursor-pointer">
+                    <input type="checkbox" class="task-checkbox h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 peer">
+                    <span class="ml-3 text-base text-gray-700 peer-checked:line-through peer-checked:text-gray-400">
+                        (ระดับองค์กร) พิจารณา "สร้างเอง" (In-house) เพื่อลดต้นทุนมหาศาล
+                    </span>
+                </label>
+
+                <label class="task-item flex items-center p-3 rounded-lg cursor-pointer">
+                    <input type="checkbox" class="task-checkbox h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 peer">
+                    <span class="ml-3 text-base text-gray-700 peer-checked:line-through peer-checked:text-gray-400">
+                        ทดลองใช้ AI (เช่น Google AI) เพื่อเข้าใจศักยภาพและข้อจำกัด
+                    </span>
+                </label>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-gray-500 text-sm mt-10 border-t pt-4">
+            ออกแบบโดยเภสัชกรวิรุณ เวชศิริ
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('.task-checkbox');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const resetButton = document.getElementById('resetButton');
+            const totalTasks = checkboxes.length;
+
+            function updateProgress() {
+                const checkedTasks = document.querySelectorAll('.task-checkbox:checked').length;
+                const percentage = totalTasks > 0 ? (checkedTasks / totalTasks) * 100 : 0;
+                
+                progressBar.style.width = `${percentage}%`;
+                progressText.textContent = `${Math.round(percentage)}% สำเร็จ (${checkedTasks} / ${totalTasks} รายการ)`;
+            }
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateProgress);
+            });
+
+            resetButton.addEventListener('click', () => {
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                updateProgress();
+            });
+
+            // Initial call
+            updateProgress();
+        });
+    </script>
+</body>
+</html>

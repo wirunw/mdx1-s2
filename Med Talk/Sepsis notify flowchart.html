@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flowchart: กระบวนการแจ้งเตือน Sepsis อัจฉริยะ</title>
+    <!-- โหลด Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* ใช้ฟอนต์ Sarabun */
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap');
+        
+        :root {
+            --primary-blue: #0066cc;
+            --primary-dark: #004494;
+            --primary-light: #4d94ff;
+            --accent-teal: #00b8a9;
+            --accent-gold: #f8b739;
+            --dark-bg: #0a1929;
+            --text-primary: #ffffff;
+            --text-secondary: #b0bec5;
+            --text-dark: #1a1a1a;
+        }
+
+        * {
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #0d2745 100%);
+            min-height: 100vh;
+        }
+
+        /* Flowchart Container */
+        .flowchart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        /* Header */
+        .flowchart-header {
+            backdrop-filter: blur(10px);
+            background: rgba(0, 102, 204, 0.1);
+            border: 1px solid rgba(0, 102, 204, 0.3);
+            border-radius: 2rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .flowchart-header h1 {
+            color: var(--text-primary);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+        }
+
+        .flowchart-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .flowchart-header .subtitle {
+            color: var(--accent-teal);
+            font-weight: 600;
+        }
+
+        /* Start Node */
+        .flowchart-start {
+            position: relative;
+            width: 280px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-light));
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0, 102, 204, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .flowchart-start h2 {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        /* Connector Lines */
+        .connector {
+            position: relative;
+            width: 4px;
+            height: 60px;
+            background: linear-gradient(180deg, var(--primary-blue), var(--accent-teal));
+            margin: 1rem 0;
+            border-radius: 2px;
+        }
+
+        .connector::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 12px solid var(--accent-teal);
+        }
+
+        /* Process Box */
+        .flowchart-box {
+            width: 100%;
+            max-width: 320px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(0, 102, 204, 0.2);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flowchart-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-teal));
+        }
+
+        .flowchart-box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(0, 102, 204, 0.3);
+            border-color: var(--accent-teal);
+        }
+
+        .flowchart-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .flowchart-box h3 {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .flowchart-box p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Decision Diamond */
+        .flowchart-decision {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #f5a623 100%);
+            position: relative;
+            transform: rotate(45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(248, 183, 57, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .flowchart-decision:hover {
+            transform: rotate(45deg) scale(1.05);
+            box-shadow: 0 16px 48px rgba(248, 183, 57, 0.5);
+        }
+
+        .flowchart-decision-content {
+            transform: rotate(-45deg);
+            text-align: center;
+            color: white;
+            width: 200px;
+        }
+
+        .flowchart-decision-content .label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .flowchart-decision-content h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .flowchart-decision-content p {
+            font-size: 0.85rem;
+            opacity: 0.95;
+        }
+
+        /* Branch Container */
+        .branch-container {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 2rem 0;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .branch-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        /* Branch */
+        .branch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* Path Indicator */
+        .path-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .path-yes {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            border: 2px solid #4caf50;
+        }
+
+        .path-no {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+            border: 2px solid #f44336;
+        }
+
+        /* Alert Box */
+        .flowchart-alert {
+            background: linear-gradient(135deg, #ff6b6b, #ff4757);
+            border-color: #ff4757;
+            border-radius: 1.5rem;
+            position: relative;
+            animation: pulse-alert 2s infinite;
+        }
+
+        @keyframes pulse-alert {
+            0%, 100% { box-shadow: 0 8px 32px rgba(255, 71, 87, 0.3); }
+            50% { box-shadow: 0 16px 48px rgba(255, 71, 87, 0.5); }
+        }
+
+        .flowchart-alert .flowchart-label {
+            color: white;
+        }
+
+        .flowchart-alert h3 {
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .flowchart-alert p {
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 600;
+        }
+
+        /* Success Box */
+        .flowchart-success {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            border-color: #4caf50;
+        }
+
+        .flowchart-success .flowchart-label {
+            color: white;
+        }
+
+        .flowchart-success h3 {
+            color: white;
+        }
+
+        .flowchart-success p {
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* Normal Box */
+        .flowchart-normal {
+            background: rgba(200, 200, 200, 0.8);
+            border-color: #999;
+        }
+
+        /* Outcome Box */
+        .flowchart-outcome {
+            width: 100%;
+            max-width: 400px;
+            background: linear-gradient(135deg, var(--accent-teal), #00a896);
+            border: 2px solid var(--accent-teal);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 12px 40px rgba(0, 184, 169, 0.4);
+            margin-top: 2rem;
+        }
+
+        .flowchart-outcome .flowchart-label {
+            color: white;
+        }
+
+        .flowchart-outcome h2 {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .flowchart-outcome p {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Channels List */
+        .channels-list {
+            list-style: none;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .channels-list li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: rgba(0, 102, 204, 0.05);
+            border-left: 4px solid var(--primary-blue);
+            border-radius: 0.5rem;
+        }
+
+        .channels-list li:last-child {
+            background: rgba(0, 102, 204, 0.15);
+            font-weight: 700;
+            border-left-color: var(--accent-teal);
+        }
+
+        /* Stats Container */
+        .outcome-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Separator */
+        .flowchart-separator {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-blue), transparent);
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <div class="flowchart-header">
+            <h1>Flowchart: กระบวนการแจ้งเตือน Sepsis อัจฉริยะ</h1>
+            <p>จาก <span class="subtitle">"Med talk Apollo"</span> โดย นพ.พร้อมพงศ์ โยธาราษฎร์</p>
+            <p style="font-size: 0.95rem; margin-top: 1rem;">แสดงให้เห็นว่าระบบสามารถแจ้งเตือนแพทย์ได้เร็ว เพื่อให้การรักษาทันท่วงที</p>
+        </div>
+
+        <!-- Flowchart -->
+        <div class="flowchart-container">
+            
+            <!-- 1. Start Node -->
+            <div class="flowchart-start">
+                <h2>🏥 ผู้ป่วยมาถึงโรงพยาบาล</h2>
+            </div>
+
+            <!-- Connector -->
+            <div class="connector"></div>
+
+            <!-- 2. Process: Vital Signs -->
+            <div class="flowchart-box">
+                <div class="flowchart-label">กระบวนการ (Process)</div>
+                <h3>📊 วัดสัญญาณชีพ (Vital Signs)</h3>
+                <p>พยาบาลคีย์ข้อมูล (ไข้, อัตราหายใจ, ชีพจร) เข้าสู่ระบบ HIS</p>
+            </div>
+
+            <!-- Connector -->
+            <div class="connector"></div>
+
+            <!-- 3. Process: Automation -->
+            <div class="flowchart-box">
+                <div class="flowchart-label">การตรวจสอบ (Automation)</div>
+                <h3>⚙️ ระบบ HIS ตรวจสอบ Real-time</h3>
+                <p>เทียบข้อมูลกับเกณฑ์ Sepsis (SIRS, qSOFA)</p>
+            </div>
+
+            <!-- Connector -->
+            <div class="connector"></div>
+
+            <!-- 4. Decision Diamond -->
+            <div class="flowchart-decision">
+                <div class="flowchart-decision-content">
+                    <div class="label">การตัดสินใจ</div>
+                    <h3>"เข้าเกณฑ์สงสัย<br>Sepsis หรือไม่?"</h3>
+                    <p>(SIRS ≥ 2 ใน 4)</p>
+                </div>
+            </div>
+
+            <!-- Branches -->
+            <div class="branch-container">
+                
+                <!-- NO Path -->
+                <div class="branch">
+                    <div class="path-indicator path-no">❌ ไม่ (NO)</div>
+                    <div class="flowchart-box flowchart-normal">
+                        <div class="flowchart-label">กระบวนการปกติ</div>
+                        <h3>➡️ ดูแลผู้ป่วยตามปกติ</h3>
+                        <p>ติดตามสัญญาณชีพ รายชั่วโมง</p>
+                    </div>
+                </div>
+
+                <!-- YES Path -->
+                <div class="branch">
+                    <div class="path-indicator path-yes">✅ ใช่ (YES)</div>
+
+                    <!-- Alert -->
+                    <div class="flowchart-box flowchart-alert">
+                        <div class="flowchart-label">ปฏิบัติการ (Action)</div>
+                        <h3>🚨 ระบบส่ง Alert อัตโนมัติ!</h3>
+                        <p>"สงสัย Sepsis! ต้องมาดูโดยไว!"</p>
+                    </div>
+
+                    <!-- Connector -->
+                    <div class="connector"></div>
+
+                    <!-- Channels -->
+                    <div class="flowchart-box">
+                        <div class="flowchart-label">ช่องทาง (Channels)</div>
+                        <h3>📢 แจ้งเตือนถึง</h3>
+                        <ul class="channels-list">
+                            <li>🖥️ คอมพิวเตอร์ที่วอร์ด (HIS)</li>
+                            <li>👨‍⚕️ แพทย์เวร</li>
+                            <li>👩‍⚕️ พยาบาล IC</li>
+                            <li>📱 LINE Notify (มือถือทีม)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Connector -->
+                    <div class="connector"></div>
+
+                    <!-- Goal -->
+                    <div class="flowchart-box flowchart-success">
+                        <div class="flowchart-label">เป้าหมาย (Goal)</div>
+                        <h3>⚡ ให้ยาฆ่าเชื้อไวที่สุด</h3>
+                        <p>"ช่วยชีวิตผู้ป่วยให้มากขึ้น"</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Separator -->
+            <div class="flowchart-separator"></div>
+
+            <!-- Outcome -->
+            <div class="flowchart-outcome">
+                <div class="flowchart-label">ผลลัพธ์เชิงกลยุทธ์ (Outcome)</div>
+                <h2>📈 อัตราการเสียชีวิตจาก Sepsis ลดลง</h2>
+                <div class="outcome-stats">
+                    <div class="stat">
+                        <div class="stat-number">30</div>
+                        <div class="stat-label">ปี 2564</div>
+                    </div>
+                    <div class="stat" style="font-size: 2rem; color: white; opacity: 0.7;">→</div>
+                    <div class="stat">
+                        <div class="stat-number">14</div>
+                        <div class="stat-label">ปี 2567</div>
+                    </div>
+                </div>
+                <p style="margin-top: 1rem;">ลดลง 53% | ชีวิตที่ช่วยได้เพิ่มขึ้น 16 ราย</p>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

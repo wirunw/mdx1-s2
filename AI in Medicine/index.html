@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI in Medicine - ระบบนิเวศ AI ทางการแพทย์</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'Sarabun', sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e57c2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.back-link {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+    font-weight: 500;
+}
+
+.back-link:hover {
+    background: rgba(255,255,255,0.25);
+    transform: translateX(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+header {
+    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
+    padding: 50px 30px;
+    border-radius: 16px;
+    margin-bottom: 40px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+header p {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.file-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.file-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    transition: all 0.4s ease;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.5);
+    backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.file-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+}
+
+.file-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.25);
+}
+
+.file-icon {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 25px;
+    font-size: 3rem;
+    text-align: center;
+}
+
+.file-content {
+    padding: 20px;
+}
+
+.file-content h3 {
+    color: #667eea;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.file-desc {
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.file-type {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    margin-right: 8px;
+    font-weight: 500;
+}
+
+.file-link {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-top: 12px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.file-link:hover {
+    transform: translateX(3px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+footer {
+    text-align: center;
+    color: rgba(255,255,255,0.9);
+    font-size: 0.9rem;
+    margin-top: 40px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.file-card {
+    animation: fadeIn 0.6s ease forwards;
+}
+
+.file-card:nth-child(1) { animation-delay: 0.1s; }
+.file-card:nth-child(2) { animation-delay: 0.2s; }
+.file-card:nth-child(3) { animation-delay: 0.3s; }
+.file-card:nth-child(4) { animation-delay: 0.4s; }
+.file-card:nth-child(5) { animation-delay: 0.5s; }
+.file-card:nth-child(6) { animation-delay: 0.6s; }
+.file-card:nth-child(7) { animation-delay: 0.7s; }
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .file-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <a href="../index.html" class="back-link">← กลับไปยังหน้าหลัก</a>
+    
+    <header>
+        <h1>🤖 AI in Medicine</h1>
+        <p>ระบบนิเวศ AI ทางการแพทย์</p>
+        <p style="color: #999; font-size: 0.9rem; margin-top: 8px;">บทเรียนจาก Dr. Jorge Cardoso - Medical AI Ecosystem</p>
+    </header>
+
+    <div class="file-grid">
+        <!-- Dr. Jorge -->
+        <div class="file-card">
+            <div class="file-icon">📄</div>
+            <div class="file-content">
+                <h3>Dr.Jorge.html</h3>
+                <p class="file-desc">บันทึกการเรียนรู้ฉบับสมบูรณ์จากการบรรยายของ Dr. Jorge Cardoso เกี่ยวกับวิวัฒนาการและการใช้งาน AI ในสถาบันการแพทย์</p>
+                <span class="file-type">📖 บทความ</span>
+                <a href="Dr.Jorge.html" class="file-link">เปิดอ่าน</a>
+            </div>
+        </div>
+
+        <!-- DrJorge Checklist -->
+        <div class="file-card">
+            <div class="file-icon">✓</div>
+            <div class="file-content">
+                <h3>DrJorge Checklist.html</h3>
+                <p class="file-desc">รายการตรวจสอบและขั้นตอนการนำ AI มาใช้ในองค์กร พร้อมแนวทางปฏิบัติเชิงประยุกต์</p>
+                <span class="file-type">📋 Checklist</span>
+                <a href="DrJorge Checklist.html" class="file-link">ดูรายการ</a>
+            </div>
+        </div>
+
+        <!-- DrJorge Flowchart -->
+        <div class="file-card">
+            <div class="file-icon">📊</div>
+            <div class="file-content">
+                <h3>DrJorge flowchart.html</h3>
+                <p class="file-desc">แผนผังการตัดสินใจและกระบวนการพัฒนา AI ในระบบสุขภาพอย่างเป็นระบบ</p>
+                <span class="file-type">📈 Diagram</span>
+                <a href="DrJorge flowchart.html" class="file-link">ดูแผนผัง</a>
+            </div>
+        </div>
+
+        <!-- DrPiyalit -->
+        <div class="file-card">
+            <div class="file-icon">💬</div>
+            <div class="file-content">
+                <h3>DrPiyalit.html</h3>
+                <p class="file-desc">การบรรยายจาก Dr. Piyalit เกี่ยวกับการนำ AI ไปประยุกต์ใช้จริงในสถานทีปฏิบัติการและการรับมืออุปสรรค</p>
+                <span class="file-type">🎤 บรรยาย</span>
+                <a href="DrPiyalit.html" class="file-link">เปิดอ่าน</a>
+            </div>
+        </div>
+
+        <!-- DrPiyalit Checklist -->
+        <div class="file-card">
+            <div class="file-icon">✓</div>
+            <div class="file-content">
+                <h3>DrPiyalit-checklist.html</h3>
+                <p class="file-desc">รายการตรวจสอบการนำ AI มาใช้ในสถานปฏิบัติการพร้อมแนวทางปฏิบัติเฉพาะด้าน</p>
+                <span class="file-type">📋 Checklist</span>
+                <a href="DrPiyalit-checklist.html" class="file-link">ดูรายการ</a>
+            </div>
+        </div>
+
+        <!-- DrPiyalit Infographic -->
+        <div class="file-card">
+            <div class="file-icon">🎨</div>
+            <div class="file-content">
+                <h3>DrPiyalit-infographic.html</h3>
+                <p class="file-desc">อินโฟกราฟิก์อธิบายแนวคิด เทคนิค และการประยุกต์ใช้ AI ด้านการแพทย์อย่างสร้างสรรค์</p>
+                <span class="file-type">🖼️ Infographic</span>
+                <a href="DrPiyalit-infographic.html" class="file-link">ดูอินโฟ</a>
+            </div>
+        </div>
+
+        <!-- MONAI -->
+        <div class="file-card">
+            <div class="file-icon">🏥</div>
+            <div class="file-content">
+                <h3>MONAI-infographic.html</h3>
+                <p class="file-desc">อินโฟกราฟิก์เกี่ยวกับ MONAI (Medical Open Network for AI) - แพลตฟอร์มโอเพ่นซอร์สชั้นนำของโลก</p>
+                <span class="file-type">🖼️ Infographic</span>
+                <a href="MONAI-infographic.html" class="file-link">ดูอินโฟ</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>✨ เลือกไฟล์ที่สนใจเพื่อศึกษาเนื้อหาต่างๆ เกี่ยวกับ AI in Medicine</p>
+    </footer>
+</div>
+</body>
+</html>
