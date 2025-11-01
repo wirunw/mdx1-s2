@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Med Talk - ถอดรหัสการพลิกโฉมโรงพยาบาล</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 * {
     margin: 0;
@@ -12,10 +13,12 @@
 }
 
 body {
-    font-family: 'Segoe UI', 'Sarabun', sans-serif;
+    font-family: 'Noto Sans Thai', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #c21975 100%);
     min-height: 100vh;
     padding: 20px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .container {
@@ -210,6 +213,20 @@ footer {
     </header>
 
     <div class="file-grid">
+        <!-- ShortClip Video -->
+        <div class="file-card" style="grid-column: 1 / -1;">
+            <div class="file-icon" style="background: linear-gradient(135deg, #e74c3c 0%, #c21975 100%); position: relative; height: auto; padding: 35px;">
+                <span style="font-size: 2rem;">🎬</span>
+                <div style="position: absolute; top: 10px; right: 10px; background: #ff6b6b; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; letter-spacing: 0.5px;">วิดีโอสรุป</div>
+            </div>
+            <div class="file-content">
+                <h3 style="font-size: 1.2rem; color: #e74c3c;">📺 ShortClip - Med Talk</h3>
+                <p class="file-desc" style="color: #333;">วิดีโอสรุปเกี่ยวกับระบบข้อมูล AI และกลยุทธ์ ERRC ของโรงพยาบาล พร้อมตัวอย่างจริงจากการนำเทคโนโลยีไปใช้ประโยชน์ในการปรับปรุงผลลัพธ์ทางการแพทย์</p>
+                <span class="file-type" style="background: #e74c3c;">🎥 วิดีโอ</span>
+                <a href="ShortClip.html" class="file-link">ดูวิดีโอ</a>
+            </div>
+        </div>
+
         <!-- Innovation in Private Hospital -->
         <div class="file-card">
             <div class="file-icon">📄</div>
@@ -267,7 +284,7 @@ footer {
     </div>
 
     <footer>
-        <p>✨ เลือกไฟล์ที่สนใจเพื่อศึกษาเนื้อหาต่างๆ เกี่ยวกับการปฏิรูปดิจิทัลของโรงพยาบาล</p>
+        <p>📖 บทเรียนทั้งหมดอ้างอิงจากการบรรยายในหลักสูตร ปดพ.๑ | เรียบเรียงและออกแบบโดย เภสัชกรวิรุณ เวชศิริ</p>
     </footer>
 </div>
 </body>
